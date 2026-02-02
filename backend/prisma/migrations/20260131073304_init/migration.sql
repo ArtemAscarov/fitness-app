@@ -43,13 +43,14 @@ CREATE TABLE "Exercise" (
 -- CreateTable
 CREATE TABLE "_ExerciseToTag" (
     "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL,
-
-    CONSTRAINT "_ExerciseToTag_AB_pkey" PRIMARY KEY ("A","B")
+    "B" INTEGER NOT NULL
 );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_ExerciseToTag_AB_unique" ON "_ExerciseToTag"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_ExerciseToTag_B_index" ON "_ExerciseToTag"("B");
