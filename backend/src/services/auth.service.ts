@@ -5,13 +5,13 @@ import { createToken } from "../util/createToken";
 
 class AuthServiceClass {
   async register(data: AuthDataType) {
-    const findedUser = await prisma.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
+    // const findedUser = await prisma.user.findUnique({
+    //   where: {
+    //     email: data.email,
+    //   },
+    // });
 
-    if (findedUser) throw new Error("Данная почта уже зарегестрирована");
+    // if (findedUser) throw new Error("Данная почта уже зарегестрирована");
 
     const hashedPass = await bcrypt.hash(data.password, 10);
     const { email, id } = await prisma.user.create({
@@ -30,22 +30,24 @@ class AuthServiceClass {
   }
 
   async login(data: AuthDataType) {
-    const findedUser = await prisma.user.findUnique({
-      where: {
-        email: data.email,
-      },
-    });
 
-    if (!findedUser) throw new Error("Неправильный логин или пароль");
+      const findedUser = await prisma.user.findUnique({
+        where: {
+          email: data.email,
+        },
+      });
 
-    const isMatch = await bcrypt.compare(data.password, findedUser.password);
-    if (!isMatch) throw new Error("Неправильный логин или пароль");
+      if (!findedUser) throw new Error("Неправильный логин или пароль");
 
-    const token = createToken({ id: findedUser.id, email: findedUser.email });
-    return {
-      email: findedUser.email,
-      token,
-    };
+      const isMatch = await bcrypt.compare(data.password, findedUser.password);
+      if (!isMatch) throw new Error("Неправильный логин или пароль");
+
+      const token = createToken({ id: findedUser.id, email: findedUser.email });
+      return {
+        email: findedUser.email,
+        token,
+      };
+  
   }
 }
 

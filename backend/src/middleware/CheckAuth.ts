@@ -1,6 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { AuntificationRequest, JwtPayload } from "../lib/types/type";
+import { prisma } from "../prisma";
 
 export const CheckAuth = async (
   req: AuntificationRequest,
@@ -17,12 +18,19 @@ export const CheckAuth = async (
   try {
     const userData = jwt.verify(token, secret) as JwtPayload;
 
-    req.user = userData;
+    const foughtUser = await prisma.user.findUnique({
+      where: {
+        id: userData.id,
+      },
+    });
+
+    if (foughtUser && foughtUser.email === userData.email) req.user = userData;
+
     next();
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "error",
+    res.status(400).json({
+      message: "error in CheckAuth",
     });
   }
 };

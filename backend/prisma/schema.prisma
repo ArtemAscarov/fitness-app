@@ -8,22 +8,17 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
-  password String
-}
-
-model Level {
-  id        Int        @id @default(autoincrement())
-  name      String
-  slug      String
-  exercises Exercise[]
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  tokenId   Int
+  refreshes Refresh @relation(fields: [tokenId], references: [id])
 }
 
 model Category {
   id        Int        @id @default(autoincrement())
   name      String
-  slug      String
+  slug      String     @unique
   exercises Exercise[]
 }
 
@@ -41,7 +36,12 @@ model Exercise {
   calory String?
 
   tag Category[]
+}
 
-  levelId Int
-  level   Level @relation(fields: [levelId], references: [id])
+model Refresh {
+  id         Int      @default(autoincrement())
+  tokerId    String   @unique
+  userId     Int
+  expireDate DateTime
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

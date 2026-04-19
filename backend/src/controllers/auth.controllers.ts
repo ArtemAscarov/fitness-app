@@ -1,33 +1,20 @@
 import { Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
+import { CustomError } from "../util/CustomError";
 
 class AuthControllerClass {
   async register(req: Request, res: Response) {
-    try {
-      const userData = await AuthService.register(req.body);
-      return res.status(200).json(userData);
-    } catch (err: any) {
-      console.log(err);
-      return res.status(400).json([
-        {
-          message: err.message,
-        },
-      ]);
-    }
+    const userData = await AuthService.register(req.body);
+    return res.status(200).json(userData);
   }
 
   async login(req: Request, res: Response) {
-    try {
-      const userData = await AuthService.login(req.body);
-      return res.status(200).json(userData);
-    } catch (err: any) {
-      console.log(err);
-      return res.status(401).json([
-        {
-          message: err.message,
-        },
-      ]);
-    }
+    const { code, message } = new CustomError("asdf", 200);
+
+    console.log(code, message);
+
+    const userData = await AuthService.login(req.body);
+    return res.status(200).json(userData);
   }
 }
 

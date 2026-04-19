@@ -5,9 +5,8 @@ export const AuthValidator = z
     email: z
       .email("Не валидный Email")
       .transform((v) => v.trim().toLowerCase()),
-    password: z.string().min(6, "Минимум 6 символов"),
+    password: z.string().min(6, "Минимум 6 символов").max(256, "Максимум 256 символов"),
   })
   .strict();
 
-
-export type AuthDataType = z.infer<typeof AuthValidator>
+export type AuthDataType = z.infer<typeof AuthValidator>;
