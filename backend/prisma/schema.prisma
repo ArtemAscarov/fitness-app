@@ -8,11 +8,10 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   password  String
-  tokenId   Int
-  refreshes Refresh @relation(fields: [tokenId], references: [id])
+  refreshes Refresh[]
 }
 
 model Category {
@@ -39,7 +38,7 @@ model Exercise {
 }
 
 model Refresh {
-  id         Int      @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   tokerId    String   @unique
   userId     Int
   expireDate DateTime

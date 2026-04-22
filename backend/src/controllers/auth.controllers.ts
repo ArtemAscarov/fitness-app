@@ -9,10 +9,6 @@ class AuthControllerClass {
   }
 
   async login(req: Request, res: Response) {
-    const { code, message } = new CustomError("asdf", 200);
-
-    console.log(code, message);
-
     const userData = await AuthService.login(req.body);
     return res.status(200).json(userData);
   }

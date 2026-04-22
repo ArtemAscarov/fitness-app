@@ -1,12 +1,15 @@
 import { Request } from "express";
 
-export type JwtPayload = {
+export type AuthJwtPayload = {
   id: number;
-  email: string;
+};
+
+export type RefreshJwtPayload = {
+  refreshId: string
 };
 
 export interface AuntificationRequest extends Request {
-  user?: JwtPayload;
+  user?: AuthJwtPayload;
 }
 
 export type CodesType = 200 | 201 | 400 | 401 | 403 | 404 | 409 | 500;

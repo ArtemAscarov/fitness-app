@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
-import { AuntificationRequest, JwtPayload } from "../lib/types/type";
+import { AuntificationRequest, AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 
 export const CheckAuth = async (
@@ -16,21 +16,25 @@ export const CheckAuth = async (
   //   res.status(403).json({ message: "Недостаточно прав" });
 
   try {
-    const userData = jwt.verify(token, secret) as JwtPayload;
+    const { id } = jwt.verify(token, secret) as AuthJwtPayload;
 
     const foughtUser = await prisma.user.findUnique({
       where: {
-        id: userData.id,
+        id: id,
+      },
+      select: {
+        email: true,
+        id: true,
       },
     });
 
-    if (foughtUser && foughtUser.email === userData.email) req.user = userData;
+    if (foughtUser) req.user = foughtUser;
 
     next();
   } catch (err) {
     console.log(err);
     res.status(400).json({
-      message: "error in CheckAuth",
+      message: "Ошибка прав пользователся",
     });
   }
 };

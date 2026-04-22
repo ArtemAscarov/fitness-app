@@ -7,3 +7,9 @@ export const IdParamsSchema = z
   .strict();
 
 export type IdParamsType = z.infer<typeof IdParamsSchema>;
+
+export const tokenSchema = z.object({
+  token: z.jwt("Некорректный токен"),
+});
+
+export type tokenType = z.infer<typeof tokenSchema>;

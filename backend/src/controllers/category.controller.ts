@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { IdParamsSchema } from "../validators/general.validators";
 import { CategoryService } from "../services/category.service";
-import { CategorySchemaPatch } from "../validators/category.validator";
 
 class CategoryControllerCalss {
   async create(req: Request, res: Response) {
