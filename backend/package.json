@@ -8,7 +8,8 @@
     "dev": "tsx watch src/server.ts",
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
-    "studio": "npx prisma studio"
+    "studio": "npx prisma studio",
+    "test": "tsc --noEmit"
   },
   "author": "",
   "license": "ISC",

@@ -32,7 +32,7 @@ model Exercise {
 
   isFavorite Boolean
 
-  calory String?
+  calory Int?
 
   tag Category[]
 }
