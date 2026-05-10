@@ -1,3 +1,4 @@
+import { AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 import { CustomError } from "../util/CustomError";
 import {
@@ -18,12 +19,27 @@ class ExcerciseServiceClass {
     return data;
   }
 
-  async getAll() {
-    const data = await prisma.exercise.findMany();
+  async getAll(user?: AuthJwtPayload) {
+    const data = await prisma.exercise.findMany({
+      include: {
+        favorites: {
+          where: {
+            id: user?.id,
+          },
+        },
+      },
+    });
 
     if (!data) throw new CustomError("Ошибка при получении упражнений", 500);
 
-    return data;
+    const reducedData = data.map(({ favorites, ...excercise }) => {
+      return {
+        ...excercise,
+        isFavorite: favorites.length > 0,
+      };
+    });
+
+    return reducedData;
   }
 
   async delete(id: number) {

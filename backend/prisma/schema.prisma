@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
   password  String
   refreshes Refresh[]
+  favorites Favorite[]
 }
 
 model Category {
@@ -19,6 +20,18 @@ model Category {
   name      String
   slug      String     @unique
   exercises Exercise[]
+}
+
+model Favorite {
+  id Int @unique @default(autoincrement())
+
+  excerciseId Int
+  userId      Int
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  excercise Exercise @relation(fields: [excerciseId], references: [id], onDelete: Cascade)
+
+  @@unique([excerciseId, userId])
 }
 
 model Exercise {
@@ -29,12 +42,10 @@ model Exercise {
   instruction      String
 
   image String
-
-  isFavorite Boolean
-
   calory Int?
 
-  tag Category[]
+  tag       Category[]
+  favorites Favorite[]
 }
 
 model Refresh {

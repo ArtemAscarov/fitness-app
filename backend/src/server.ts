@@ -5,6 +5,7 @@ import categoryRouter from "./routes/category.routes";
 import GlobalErrorValidator from "./middleware/GlobalErrorValidator";
 import refreshRouter from "./routes/refresh.routes";
 import ExcerciseRoter from "./routes/excercise.routes";
+import FavoriteRoter from "./routes/favorite.routes";
 
 dotenv.config();
 const app = express();
@@ -13,9 +14,10 @@ const port = process.env?.PORT || 3001;
 app.use(express.json());
 
 app.use(authRouter);
-app.use("/category/", categoryRouter);
+app.use("/category", categoryRouter);
 app.use("/refresh", refreshRouter);
 app.use("/excercise", ExcerciseRoter);
+app.use("/favorite", FavoriteRoter);
 
 app.use(GlobalErrorValidator);
 
