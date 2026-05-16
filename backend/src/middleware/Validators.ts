@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodType } from "zod";
+import { ZodErrorParser } from "../util/zodErrorParser";
 
 export const bodyValidator =
   (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
     const validateBody = schema.safeParse(req.body);
 
     if (!validateBody.success) {
-      // const result = validateBody.error.flatten() 
-      const message = JSON.parse(validateBody.error.message);
+      // const result = validateBody.error.flatten()
+      const message = ZodErrorParser(validateBody.error.message);
 
       return res.status(400).json(message);
     }
@@ -20,9 +21,22 @@ export const paramValidator =
     const validateParam = schema.safeParse(req.params);
 
     if (!validateParam.success) {
-      const message = JSON.parse(validateParam.error.message);
+      const message = ZodErrorParser(validateParam.error.message);
       return res.status(400).json(message);
     }
 
+    next();
+  };
+
+export const queryValidator =
+  (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {
+    const validateQuery = schema.safeParse(req.query);
+
+    if (!validateQuery.success) {
+      const message = ZodErrorParser(validateQuery.error.message);
+      return res.status(400).json(message);
+    }
+
+    res.locals.query = validateQuery.data
     next();
   };

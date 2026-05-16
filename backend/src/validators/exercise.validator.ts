@@ -22,11 +22,20 @@ export const ExcerciseSchema = z.object({
   calory: z.number().optional(),
 });
 
-export const ExcerciseSchemaPatch = ExcerciseSchema.extend({
-  isFavorite: z.boolean(),
-})
-  .partial()
-  .strict();
+export const ExcerciseFilters = z
+  .object({
+    title: z
+      .string()
+      .max(256, "Максимум 512 символов")
+      .min(1, "Минимум 1 символ")
+      .optional(),
+    calory: z.coerce.number().optional(),
+    isFavorite: z.stringbool().optional(),
+    tag: z.string().optional(),
+  })
+
+export const ExcerciseSchemaPatch = ExcerciseSchema.partial().strict();
 
 export type ExcerciseSchemaType = z.infer<typeof ExcerciseSchema>;
 export type ExcerciseSchemaPatchType = z.infer<typeof ExcerciseSchemaPatch>;
+export type ExcerciseFiltersType = z.infer<typeof ExcerciseFilters>;

@@ -4,12 +4,14 @@ import { AuntificationRequest, AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 
 export const CheckAuth =
-  ({ isStrict }: { isStrict: boolean }) =>
+  ({ isStrict = false }: { isStrict?: boolean } = {}) =>
   async (req: AuntificationRequest, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || "It_is_secret";
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
-    const badReq = () => res.status(403).json({ message: "Недостаточно прав" });
+    const badReq = () => {
+      return res.status(403).json({ message: "Недостаточно прав" });
+    };
 
     if (!token) return isStrict ? badReq() : next();
 

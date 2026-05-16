@@ -4,34 +4,35 @@ import { AuntificationRequest } from "../lib/types/type";
 
 class ExcerciseControllerClass {
   async get(req: AuntificationRequest, res: Response) {
+    return res.json(res.locals.query)
 
-    const data = await ExcerciseService.getAll(req.user);
+    // const data = await ExcerciseService.getAll(req.user);
 
-    res.json(data).status(200);
+    // return res.json(data).status(200);
   }
 
   async delete(req: Request, res: Response) {
     const data = await ExcerciseService.delete(+req.params.id);
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 
   async patch(req: Request, res: Response) {
     const data = await ExcerciseService.update(+req.params.id, req.body);
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 
   async post(req: Request, res: Response) {
     const data = await ExcerciseService.create(req.body);
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 
   async getOne(req: Request, res: Response) {
     const data = await ExcerciseService.getOne(+req.params.id);
 
-    res.status(200).json(data);
+    return res.status(200).json(data);
   }
 }
 
