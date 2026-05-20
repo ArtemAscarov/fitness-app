@@ -20,6 +20,7 @@ model Category {
   name      String
   slug      String     @unique
   exercises Exercise[]
+  @@index([slug])
 }
 
 model Favorite {

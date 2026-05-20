@@ -1,7 +1,9 @@
+import { Prisma } from "@prisma/client";
 import { AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 import { CustomError } from "../util/CustomError";
 import {
+  ExcerciseFiltersType,
   ExcerciseSchemaPatchType,
   ExcerciseSchemaType,
 } from "../validators/exercise.validator";
@@ -19,14 +21,49 @@ class ExcerciseServiceClass {
     return data;
   }
 
-  async getAll(user?: AuthJwtPayload) {
+  async getAll(query: ExcerciseFiltersType, user?: AuthJwtPayload) {
+    const where: Prisma.ExerciseWhereInput = {};
+
+    if (query.title)
+      where.title = { contains: query.title, mode: "insensitive" };
+
+    if (query.calory) where.calory = { equals: query.calory };
+
+    if (query.tag)
+      where.tag = {
+        some: {
+          slug: {
+            in: query.tag,
+          },
+        },
+      };
+
+    if (user && query.isFavorite === true) {
+      where.favorites = {
+        some: {
+          userId: user.id,
+        },
+      };
+    }
+
+    if (user && query.isFavorite === false) {
+      where.favorites = {
+        none: {
+          userId: user.id,
+        },
+      };
+    }
+
     const data = await prisma.exercise.findMany({
+      where,
+
       include: {
         favorites: {
           where: {
-            id: user?.id,
+            userId: user?.id,
           },
         },
+        tag: true,
       },
     });
 

@@ -4,11 +4,9 @@ import { AuntificationRequest } from "../lib/types/type";
 
 class ExcerciseControllerClass {
   async get(req: AuntificationRequest, res: Response) {
-    return res.json(res.locals.query)
+    const data = await ExcerciseService.getAll(res.locals.query, req.user);
 
-    // const data = await ExcerciseService.getAll(req.user);
-
-    // return res.json(data).status(200);
+    return res.json(data).status(200);
   }
 
   async delete(req: Request, res: Response) {
