@@ -3,6 +3,7 @@ import { AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 import { CustomError } from "../util/CustomError";
 import {
+  ExcerciseCategroyUpdateType,
   ExcerciseFiltersType,
   ExcerciseSchemaPatchType,
   ExcerciseSchemaType,
@@ -29,11 +30,11 @@ class ExcerciseServiceClass {
 
     if (query.calory) where.calory = { equals: query.calory };
 
-    if (query.tag)
-      where.tag = {
+    if (query.category)
+      where.category = {
         some: {
           slug: {
-            in: query.tag,
+            in: query.category,
           },
         },
       };
@@ -63,7 +64,7 @@ class ExcerciseServiceClass {
             userId: user?.id,
           },
         },
-        tag: true,
+        category: true,
       },
     });
 
@@ -108,6 +109,46 @@ class ExcerciseServiceClass {
     });
 
     if (!data) throw new CustomError("Ошибка при обновлении упражнения", 500);
+
+    return data;
+  }
+
+  async bindToCategory({
+    excerciseId,
+    categoryId,
+  }: ExcerciseCategroyUpdateType) {
+    const data = await prisma.exercise.update({
+      where: { id: excerciseId },
+      data: {
+        category: {
+          connect: { id: categoryId },
+        },
+      },
+    });
+
+    if (!data) throw new CustomError("Ошибка при создании связи", 500);
+
+    return data;
+  }
+
+  async toreCategoryConnection({
+    excerciseId,
+    categoryId,
+  }: ExcerciseCategroyUpdateType) {
+    const data = await prisma.exercise.update({
+      where: {
+        id: excerciseId,
+      },
+      data: {
+        category: {
+          disconnect: {
+            id: categoryId,
+          },
+        },
+      },
+    });
+
+    if (!data) throw new CustomError("Ошибка при разрыве связи", 500);
 
     return data;
   }

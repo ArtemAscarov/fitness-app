@@ -32,6 +32,18 @@ class ExcerciseControllerClass {
 
     return res.status(200).json(data);
   }
+
+  async connectToCategory(req: Request, res: Response) {
+    const data = await ExcerciseService.bindToCategory(req.body);
+
+    return res.status(200).json(data);
+  }
+
+  async disconnectToCategroy(req: Request, res: Response) {
+    const data = await ExcerciseService.toreCategoryConnection(req.body);
+
+    res.status(200).json(data);
+  }
 }
 
 export const ExcerciseController = new ExcerciseControllerClass();

@@ -45,7 +45,7 @@ model Exercise {
   image String
   calory Int?
 
-  tag       Category[]
+  category       Category[]
   favorites Favorite[]
 }
 

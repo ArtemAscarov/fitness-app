@@ -8,13 +8,14 @@ import {
 } from "../middleware/Validators";
 import { IdParamsSchema } from "../validators/general.validators";
 import {
+  ExcerciseCategroyUpdate,
   ExcerciseFilters,
   ExcerciseSchema,
   ExcerciseSchemaPatch,
 } from "../validators/exercise.validator";
 
 const ExcerciseRoter = Router();
-  
+
 ExcerciseRoter.get(
   "/",
   CheckAuth(),
@@ -49,6 +50,18 @@ ExcerciseRoter.get(
   paramValidator(IdParamsSchema),
   CheckAuth,
   ExcerciseController.getOne,
+);
+
+ExcerciseRoter.post(
+  "/connectToCategory",
+  bodyValidator(ExcerciseCategroyUpdate),
+  ExcerciseController.connectToCategory,
+);
+
+ExcerciseRoter.post(
+  "/disConnectToCategory",
+  bodyValidator(ExcerciseCategroyUpdate),
+  ExcerciseController.disconnectToCategroy,
 );
 
 export default ExcerciseRoter;

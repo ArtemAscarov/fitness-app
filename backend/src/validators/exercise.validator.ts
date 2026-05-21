@@ -30,14 +30,20 @@ export const ExcerciseFilters = z.object({
     .optional(),
   calory: z.coerce.number().optional(),
   isFavorite: z.stringbool().optional(),
-  tag: z
+  category: z
     .union([z.string(), z.array(z.coerce.string())])
     .transform((val) => (Array.isArray(val) ? val : [val]))
     .optional(),
 });
 
+export const ExcerciseCategroyUpdate = z.object({
+  excerciseId: z.coerce.number(),
+  categoryId: z.coerce.number(),
+});
+
 export const ExcerciseSchemaPatch = ExcerciseSchema.partial().strict();
 
+export type ExcerciseCategroyUpdateType = z.infer<typeof ExcerciseCategroyUpdate>
 export type ExcerciseSchemaType = z.infer<typeof ExcerciseSchema>;
 export type ExcerciseSchemaPatchType = z.infer<typeof ExcerciseSchemaPatch>;
 export type ExcerciseFiltersType = z.infer<typeof ExcerciseFilters>;

@@ -8,7 +8,6 @@ class FavoriteControllerClass {
     const data = await FavoriteService.create(userId, req.body);
 
     return res.status(200).json({
-      message: "Успешно!",
       excerciseId: data,
     });
   }
@@ -18,7 +17,6 @@ class FavoriteControllerClass {
     const data = await FavoriteService.delete(userId, req.body);
 
     return res.status(200).json({
-      message: "Успешно!",
       excerciseId: data,
     });
   }
