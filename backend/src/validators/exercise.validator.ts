@@ -34,6 +34,8 @@ export const ExcerciseFilters = z.object({
     .union([z.string(), z.array(z.coerce.string())])
     .transform((val) => (Array.isArray(val) ? val : [val]))
     .optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
 export const ExcerciseCategroyUpdate = z.object({
@@ -43,7 +45,9 @@ export const ExcerciseCategroyUpdate = z.object({
 
 export const ExcerciseSchemaPatch = ExcerciseSchema.partial().strict();
 
-export type ExcerciseCategroyUpdateType = z.infer<typeof ExcerciseCategroyUpdate>
+export type ExcerciseCategroyUpdateType = z.infer<
+  typeof ExcerciseCategroyUpdate
+>;
 export type ExcerciseSchemaType = z.infer<typeof ExcerciseSchema>;
 export type ExcerciseSchemaPatchType = z.infer<typeof ExcerciseSchemaPatch>;
 export type ExcerciseFiltersType = z.infer<typeof ExcerciseFilters>;

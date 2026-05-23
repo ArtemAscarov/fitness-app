@@ -11,7 +11,7 @@ import {
 
 class ExcerciseServiceClass {
   async getOne(id: number) {
-    const data = prisma.exercise.findUnique({
+    const data = await prisma.exercise.findUnique({
       where: {
         id,
       },
@@ -30,7 +30,7 @@ class ExcerciseServiceClass {
 
     if (query.calory) where.calory = { equals: query.calory };
 
-    if (query.category)
+    if (query.category && query.category.length > 0) {
       where.category = {
         some: {
           slug: {
@@ -38,6 +38,7 @@ class ExcerciseServiceClass {
           },
         },
       };
+    }
 
     if (user && query.isFavorite === true) {
       where.favorites = {
@@ -55,18 +56,24 @@ class ExcerciseServiceClass {
       };
     }
 
-    const data = await prisma.exercise.findMany({
-      where,
+    const [data, count] = await prisma.$transaction([
+      prisma.exercise.findMany({
+        where,
 
-      include: {
-        favorites: {
-          where: {
-            userId: user?.id,
+        take: query.limit,
+        skip: query.limit * (query.page - 1),
+
+        include: {
+          favorites: {
+            where: {
+              userId: user?.id,
+            },
           },
+          category: true,
         },
-        category: true,
-      },
-    });
+      }),
+      prisma.exercise.count({ where }),
+    ]);
 
     if (!data) throw new CustomError("Ошибка при получении упражнений", 500);
 
@@ -77,7 +84,7 @@ class ExcerciseServiceClass {
       };
     });
 
-    return reducedData;
+    return { count, results: reducedData };
   }
 
   async delete(id: number) {
@@ -94,7 +101,7 @@ class ExcerciseServiceClass {
 
   async create(body: ExcerciseSchemaType) {
     const data = await prisma.exercise.create({
-      data: { ...body, isFavorite: false },
+      data: { ...body },
     });
 
     if (!data) throw new CustomError("Ошибка при создании упражнения", 500);
