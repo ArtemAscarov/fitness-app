@@ -33,6 +33,9 @@ export const CheckAuth =
       next();
     } catch (err) {
       console.log(err);
+      if (err instanceof jwt.TokenExpiredError)
+        return res.status(401).json({ message: "Просроченный токен" });
+
       req.user = undefined;
       isStrict ? badReq() : next();
     }

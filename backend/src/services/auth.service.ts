@@ -5,14 +5,6 @@ import { createToken } from "../util/createTokens";
 
 class AuthServiceClass {
   async register(data: AuthDataType) {
-    // const findedUser = await prisma.user.findUnique({
-    //   where: {
-    //     email: data.email,
-    //   },
-    // });
-
-    // if (findedUser) throw new Error("Данная почта уже зарегестрирована");
-
     const hashedPass = await bcrypt.hash(data.password, 10);
     const { id } = await prisma.user.create({
       data: {

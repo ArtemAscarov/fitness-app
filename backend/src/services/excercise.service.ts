@@ -24,6 +24,14 @@ class ExcerciseServiceClass {
 
   async getAll(query: ExcerciseFiltersType, user?: AuthJwtPayload) {
     const where: Prisma.ExerciseWhereInput = {};
+    const include: any = { category: true };
+
+    if (user)
+      include.favorites = {
+        where: {
+          userId: user?.id,
+        },
+      };
 
     if (query.title)
       where.title = { contains: query.title, mode: "insensitive" };
@@ -62,15 +70,11 @@ class ExcerciseServiceClass {
 
         take: query.limit,
         skip: query.limit * (query.page - 1),
-
-        include: {
-          favorites: {
-            where: {
-              userId: user?.id,
-            },
-          },
-          category: true,
+        orderBy: {
+          id: "desc",
         },
+
+        include,
       }),
       prisma.exercise.count({ where }),
     ]);
@@ -78,9 +82,10 @@ class ExcerciseServiceClass {
     if (!data) throw new CustomError("Ошибка при получении упражнений", 500);
 
     const reducedData = data.map(({ favorites, ...excercise }) => {
+
       return {
         ...excercise,
-        isFavorite: favorites.length > 0,
+        isFavorite: user ? favorites.length > 0 : false,
       };
     });
 
