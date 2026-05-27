@@ -1,7 +1,12 @@
-import Favorite from "@/pages/Favorite";
+import React, { Suspense } from "react";
 
+const Favorite = React.lazy(() => import("@/pages/Favorite"));
 type Props = {};
 
 export default function page({}: Props) {
-  return <Favorite />;
+  return (
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <Favorite />
+    </Suspense>
+  );
 }

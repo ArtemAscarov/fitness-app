@@ -1,3 +1,5 @@
+import Link from "@/shared/ui/Link";
+
 type Props = {};
 
 export default function notFind({}: Props) {
@@ -15,13 +17,13 @@ export default function notFind({}: Props) {
         Возможно, вы перешли по неверной ссылке или страница была удалена.
       </p>
 
-      <a
+      <Link
         href="/"
         className="mt-8 inline-block px-6 py-3 rounded-lg bg-blue-600 text-white font-medium 
             hover:bg-blue-500 transition"
       >
         Вернуться на главную
-      </a>
+      </Link>
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import axios, { AxiosError } from "axios";
+import { LocalTokens } from "../widgetes/LocalTokens";
+
+const API_URL = process.env.BACKEND_URL || "";
 
 export const API = axios.create({
-  baseURL: process.env.BACKEND_URL || "",
+  baseURL: API_URL,
 });
 
 API.interceptors.request.use((conf) => {
@@ -17,16 +20,27 @@ API.interceptors.request.use((conf) => {
 
 API.interceptors.response.use(
   (response) => response,
-  (badReq: AxiosError) => {
-    const conf = badReq.config as typeof badReq.config & { _retry: boolean };
-    const code = badReq.response?.status;
-    const refresh = localStorage.getItem("refreshToken");
+  async (error: AxiosError) => {
+    const { clearTokens, getRefresh, setTokens } = LocalTokens;
+    const conf = error.config as typeof error.config & { _retry: boolean };
+    const code = error.response?.status;
+    const refresh = getRefresh();
 
     if (!refresh || !conf || code !== 401 || conf._retry)
-      return Promise.reject(badReq);
-
-    
+      return Promise.reject(error);
 
     conf._retry = true;
+
+    const { data } = await axios.post(`${API_URL}/refresh`);
+
+    if (!data) {
+      clearTokens();
+      return Promise.reject(error);
+    }
+
+    setTokens(data);
+
+    conf.headers.Authorization = `Bearer ${data.accesToken}`;
+    return API(conf);
   },
 );

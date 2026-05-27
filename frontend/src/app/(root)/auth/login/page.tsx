@@ -1,9 +1,13 @@
-import Login from "@/pages/Auth/Login"
+import React, { Suspense } from "react";
 
-type Props = {}
+const Login = React.lazy(() => import("@/pages/Auth/Login"));
+
+type Props = {};
 
 export default function page({}: Props) {
   return (
-    <Login />
-  )
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <Login />
+    </Suspense>
+  );
 }

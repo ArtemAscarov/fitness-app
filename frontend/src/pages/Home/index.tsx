@@ -67,7 +67,15 @@ export default function Index({}: Props) {
   ];
   return (
     <>
-      <section style={{backgroundImage : "url('/img/mainPageStart.png')"}} className="bg-[#0b1320] bg-no-repeat bg-cover bg-center text-white py-16 relative">
+      <section className="text-white md:py-16 py-2 relative">
+        <Image
+          src="/img/mainPageStart.png"
+          alt="Background"
+          fill
+          quality={80}
+          priority
+          className="object-cover -z-10"
+        />
         <div className="absolute inset-0 bg-[#000000af] z-0" />
         <div className="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10 px-2.5">
           {/* LEFT */}
@@ -133,7 +141,12 @@ export default function Index({}: Props) {
                     </div>
                   </div>
                 </div>
-                <Image src={"svg/ok.svg"} alt="ok" width={30} height={30} />{" "}
+                <Image
+                  src={"svg/ok.svg"}
+                  alt="ok"
+                  width={30}
+                  height={30}
+                />{" "}
               </div>
 
               <div className="flex justify-between items-center bg-[#132033] p-4 rounded-xl">
@@ -151,7 +164,12 @@ export default function Index({}: Props) {
                     <div className="text-sm text-gray-400">100+ вариантов</div>
                   </div>
                 </div>
-                <Image src={"svg/ok.svg"} alt="ok" width={30} height={30} />{" "}
+                <Image
+                  src={"svg/ok.svg"}
+                  alt="ok"
+                  width={30}
+                  height={30}
+                />{" "}
               </div>
 
               <div className="flex justify-between items-center bg-[#132033] p-4 rounded-xl">
@@ -171,7 +189,12 @@ export default function Index({}: Props) {
                     </div>
                   </div>
                 </div>
-                <Image src={"svg/ok.svg"} alt="ok" width={30} height={30} />{" "}
+                <Image
+                  src={"svg/ok.svg"}
+                  alt="ok"
+                  width={30}
+                  height={30}
+                />{" "}
               </div>
             </div>
           </div>
@@ -494,7 +517,10 @@ export default function Index({}: Props) {
                     </p>
                   </div>
 
-                  <Link href="/excercise" className="justify-center bg-indigo-600">
+                  <Link
+                    href="/excercise"
+                    className="justify-center bg-indigo-600"
+                  >
                     Попробовать бесплатно
                   </Link>
 
