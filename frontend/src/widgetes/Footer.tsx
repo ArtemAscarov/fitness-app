@@ -10,7 +10,6 @@ export default function Footer({}: Props) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image src={"/svg/weight.svg"} alt="logo" width={30} height={30} />
               <span className="text-lg font-semibold">ФитнесПро</span>
             </div>
 
@@ -28,18 +27,6 @@ export default function Footer({}: Props) {
                   Упражнения
                 </Link>
               </li>
-
-              <li>
-                <Link variant="whiteHover" href="/favorite">
-                  Избранное
-                </Link>
-              </li>
-
-              {/* <li>
-                <Link variant="whiteHover" href="/progress">
-                  Прогресс
-                </Link>
-              </li> */}
             </ul>
           </div>
 
@@ -57,11 +44,6 @@ export default function Footer({}: Props) {
                   Контакты
                 </Link>
               </li>
-              {/* <li>
-                <Link variant="whiteHover" href="privacy">
-                  Политика конфиденциальности
-                </Link>
-              </li> */}
             </ul>
           </div>
         </div>

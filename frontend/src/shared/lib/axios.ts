@@ -1,14 +1,14 @@
 import axios, { AxiosError } from "axios";
-import { LocalTokens } from "../widgetes/LocalTokens";
+import { LocalTokens } from "../features/LocalTokens";
 
-const API_URL = process.env.BACKEND_URL || "";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
 export const API = axios.create({
   baseURL: API_URL,
 });
 
 API.interceptors.request.use((conf) => {
-  const accesToken = localStorage.getItem("accesToken");
+  const accesToken = LocalTokens.getAcces();
 
   if (accesToken) {
     conf.headers.Authorization = `Bearer ${accesToken}`;

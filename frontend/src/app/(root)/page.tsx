@@ -1,9 +1,10 @@
 import React, { Suspense } from "react";
+import { HomeSkeleton } from "@/shared/ui/skeletons";
 const Home = React.lazy(() => import("../../pages/Home/index"));
 
 export default function page() {
   return (
-    <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense fallback={<HomeSkeleton />}>
       <Home />
     </Suspense>
   );

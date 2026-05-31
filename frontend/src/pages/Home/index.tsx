@@ -72,7 +72,7 @@ export default function Index({}: Props) {
           src="/img/mainPageStart.png"
           alt="Background"
           fill
-          quality={80}
+          quality={75}
           priority
           className="object-cover -z-10"
         />

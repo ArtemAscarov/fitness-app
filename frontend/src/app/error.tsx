@@ -8,7 +8,7 @@ export default function error({ error, reset }: Props) {
   console.log(error);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d0f15] text-gray-300 px-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#1e2939] text-gray-300 px-6">
       <h1 className="text-7xl md:text-[120px] font-bold text-white tracking-widest">
         Oops
       </h1>
@@ -28,17 +28,17 @@ export default function error({ error, reset }: Props) {
         </div>
       )}
 
-      <div className="flex items-center gap-4 mt-8">
+      <div className="flex flex-col items-center gap-4 mt-8">
         <button
           onClick={() => reset()}
-          className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition"
+          className="px-6 py-3 rounded-lg bg-blue-600 text-white font-medium hover:bg-blue-500 transition cursor-pointer"
         >
           Попробовать снова
         </button>
 
         <Link
           href="/"
-          className="px-6 py-3 rounded-lg border border-gray-700 text-gray-300 hover:bg-gray-800 transition"
+          className="px-6 py-3 bg-red-600 rounded-lg border border-gray-700 text-gray-300 hover:bg-red-700 transition w-full justify-center"
         >
           На главную
         </Link>
