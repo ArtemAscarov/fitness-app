@@ -2,30 +2,77 @@
 
 import { registerFn } from "@/entities/user/api/api";
 import { LocalTokens } from "@/shared/features/LocalTokens";
+import { APIErrorType, AuthTokens } from "@/shared/types/type";
+import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
 type Props = {};
 
+type LoginForm = {
+  email: string;
+  password: string;
+};
+
+type ErrorStateType = {
+  email: string[];
+  password: string[];
+  global: string;
+};
+
 export default function Register({}: Props) {
+  const [isSaveTokens, setIsSaveTokens] = useState<boolean>(true);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     repeatedPassword: "",
   });
 
-  const mutation = useMutation({
+  const [errors, setErrors] = useState<ErrorStateType>({
+    email: [],
+    password: [],
+    global: "",
+  });
+
+  const mutation = useMutation<AuthTokens, AxiosError, LoginForm>({
     mutationFn: registerFn,
     onSuccess: (data) => {
-      LocalTokens.setTokens(data);
+      LocalTokens.clearTokens();
+      if (isSaveTokens) LocalTokens.setTokens(data);
+      LocalTokens.setSessionTokens(data);
+    },
+    onError: (err) => {
+      const e = err.response?.data as APIErrorType;
+
+      let localErrors: ErrorStateType = {
+        email: [],
+        password: [],
+        global: "",
+      };
+
+      if (Array.isArray(e)) {
+        for (let i = 0; i < e.length; i++) {
+          localErrors[e[i].path[0] as "email" | "password"] = [
+            ...localErrors[e[i].path[0] as "email" | "password"],
+            e[i].message,
+          ];
+        }
+      } else localErrors.global = e.message;
+
+      setErrors(localErrors);
     },
   });
-  
+
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (formData.password !== formData.repeatedPassword) return;
+    if (formData.password !== formData.repeatedPassword)
+      return setErrors((prew) => ({
+        ...prew,
+        global: "Пароли должны совпадать",
+      }));
     const { repeatedPassword, ...data } = formData;
     mutation.mutate(data);
   }
@@ -35,13 +82,13 @@ export default function Register({}: Props) {
       <div className="flex items-center justify-center bg-[#1E2939] w-full max-w-[400px] text-white">
         <div className="relative w-full max-h-max max-w-md bg-neutral-primary-soft rounded-base shadow-sm p-4 md:p-6 rounded-xl">
           <div className="flex items-center justify-between border-b border-default pb-4 md:pb-5">
-            <h3 className="text-lg font-medium text-heading">Register</h3>
+            <h3 className="text-lg font-medium text-heading">Регистрация</h3>
           </div>
 
           <form onSubmit={onSubmit} className="pt-4 md:pt-6">
             <div className="mb-4">
               <label className="block mb-2.5 text-sm font-medium text-heading">
-                Your email
+                Ваша почта
               </label>
               <input
                 value={formData.email || ""}
@@ -53,11 +100,14 @@ export default function Register({}: Props) {
                 placeholder="example@company.com"
                 required
               />
+              {errors.email.map((item, index) => (
+                <AlertText key={index}>{item}</AlertText>
+              ))}
             </div>
 
             <div className="mb-6">
               <label className="block mb-2.5 text-sm font-medium text-heading">
-                Your password
+                Ваш пароль
               </label>
               <input
                 value={formData.password || ""}
@@ -69,11 +119,14 @@ export default function Register({}: Props) {
                 placeholder="••••••••"
                 required
               />
+              {errors.password.map((item, index) => (
+                <AlertText key={index}>{item}</AlertText>
+              ))}
             </div>
 
             <div className="mb-6">
               <label className="block mb-2.5 text-sm font-medium text-heading">
-                Repeat password
+                Повторите пароль
               </label>
               <input
                 value={formData.repeatedPassword || ""}
@@ -90,38 +143,41 @@ export default function Register({}: Props) {
               />
             </div>
 
-            <div className="flex items-start my-6">
+            <div className="flex items-start my-2">
               <div className="flex items-center">
                 <input
                   id="checkbox-remember"
                   type="checkbox"
-                  value=""
-                  className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+                  checked={isSaveTokens}
+                  onChange={() => setIsSaveTokens((prew) => !prew)}
+                  className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft cursor-pointer"
                 />
                 <label
                   htmlFor="checkbox-remember"
-                  className="ms-2 text-sm font-medium text-heading"
+                  className="ms-2 text-sm font-medium text-heading cursor-pointer"
                 >
-                  Remember me
+                  Запомнить меня
                 </label>
               </div>
             </div>
+
+            {errors.global ? <AlertText className="mb-3">{errors.global}</AlertText> : null}
 
             <Button
               className="mx-auto max-w-[200px] w-full justify-center my-2.5"
               type="submit"
               variant="default"
             >
-              Register
+              Зарегистрироватся
             </Button>
 
             <div className="text-sm font-medium text-body">
-              Have account?{" "}
+              Уже есть аккаунт?{" "}
               <Link
                 href="/auth/login"
                 className="text-fg-brand hover:underline text-blue-500"
               >
-                Log in
+                Войти
               </Link>
             </div>
           </form>

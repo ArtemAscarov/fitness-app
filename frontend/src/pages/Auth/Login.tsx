@@ -40,13 +40,13 @@ export default function Login({}: Props) {
     mutationFn: loginFn,
     onError: (e) => {
       const error = e.response?.data as APIErrorType;
+      let localErrors: ErrorStateType = {
+        email: [],
+        password: [],
+        global: "",
+      };
 
       if (Array.isArray(error)) {
-        let localErrors: Omit<ErrorStateType, "global"> = {
-          email: [],
-          password: [],
-        };
-
         for (let i = 0; i < error.length; i++) {
           localErrors[error[i].path[0] as "email" | "password"] = [
             ...localErrors[error[i].path[0] as "email" | "password"],
@@ -55,7 +55,9 @@ export default function Login({}: Props) {
         }
 
         setErrors((prew) => ({ ...prew, ...localErrors }));
-      } else setErrors((prew) => ({ ...prew, global: error.message }));
+      } else localErrors.global = error.message;
+
+      setErrors(localErrors);
     },
     onSuccess: (data) => {
       if (isSaveTokens) LocalTokens.setTokens(data);
@@ -123,7 +125,7 @@ export default function Login({}: Props) {
                 <AlertText key={index}>{item}</AlertText>
               ))}
             </div>
-            <div className="flex items-start my-6">
+            <div className="flex items-start my-2">
               <div className="flex items-center">
                 <input
                   id="checkbox-remember"
@@ -146,7 +148,9 @@ export default function Login({}: Props) {
                 Забыли пароль?
               </button>
             </div>
-            {errors.global ? <AlertText>{errors.global}</AlertText> : null}
+
+            {errors.global ? <AlertText className="mb-3">{errors.global}</AlertText> : null}
+            
             <Button
               className="mx-auto max-w-[200px] w-full justify-center my-2.5"
               type="submit"
