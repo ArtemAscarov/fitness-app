@@ -7,10 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ROLES {
+  ADMIN
+  USER
+}
+
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   password  String
+  role      ROLES      @default(USER)
   refreshes Refresh[]
   favorites Favorite[]
 }
@@ -20,6 +26,7 @@ model Category {
   name      String
   slug      String     @unique
   exercises Exercise[]
+
   @@index([slug])
 }
 
@@ -42,10 +49,10 @@ model Exercise {
   instructionTitle String
   instruction      String
 
-  image String
+  image  String
   calory Int?
 
-  category       Category[]
+  category  Category[]
   favorites Favorite[]
 }
 

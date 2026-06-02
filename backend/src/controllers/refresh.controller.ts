@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
 import { RefreshService } from "../services/refresh.service";
 
 class RefreshControllerClass {

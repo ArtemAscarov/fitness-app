@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 import { ExcerciseService } from "../services/excercise.service";
-import { AuntificationRequest } from "../lib/types/type";
 
 class ExcerciseControllerClass {
-  async get(req: AuntificationRequest, res: Response) {
-    const data = await ExcerciseService.getAll(res.locals.query, req.user);
+  async get(req: Request, res: Response) {
+    const data = await ExcerciseService.getAll(res.locals.query, res.locals.user);
 
     return res.json(data).status(200);
   }

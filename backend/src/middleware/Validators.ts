@@ -37,6 +37,6 @@ export const queryValidator =
       return res.status(400).json(message);
     }
 
-    res.locals.query = validateQuery.data
+    res.locals.query = validateQuery.data;
     next();
   };

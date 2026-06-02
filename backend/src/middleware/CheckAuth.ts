@@ -1,11 +1,15 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { AuntificationRequest, AuthJwtPayload } from "../lib/types/type";
+import { AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
+import { ROLES } from "@prisma/client";
 
 export const CheckAuth =
-  ({ isStrict = false }: { isStrict?: boolean } = {}) =>
-  async (req: AuntificationRequest, res: Response, next: NextFunction) => {
+  ({
+    isStrict = false,
+    accessedRoles,
+  }: { isStrict?: boolean; accessedRoles?: ROLES[] } = {}) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || "It_is_secret";
     const authHeader = req.headers.authorization;
     const token = authHeader?.split(" ")[1];
@@ -25,18 +29,27 @@ export const CheckAuth =
         select: {
           email: true,
           id: true,
+          role: true,
         },
       });
 
-      if (foughtUser) req.user = foughtUser;
+      if (!foughtUser) {
+        return res
+          .status(400)
+          .json({ message: "Ошибка при получении пользователя по токену" });
+      }
 
+      if (accessedRoles && !accessedRoles.includes(foughtUser.role))
+        return badReq();
+
+      res.locals.user = foughtUser;
       next();
     } catch (err) {
       console.log(err);
       if (err instanceof jwt.TokenExpiredError)
         return res.status(401).json({ message: "Просроченный токен" });
 
-      req.user = undefined;
+      res.locals.user = undefined;
       isStrict ? badReq() : next();
     }
   };
