@@ -1,12 +1,13 @@
 "use client";
 
-import { loginFn } from "@/entities/user/api/api";
+import { loginFn } from "@/entities/user/api";
 import { LocalTokens } from "@/shared/features/LocalTokens";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { ChangeEvent, FormEvent, useState } from "react";
 
@@ -25,6 +26,7 @@ type ErrorStateType = {
 
 export default function Login({}: Props) {
   const [isSaveTokens, setIsSaveTokens] = useState(true);
+  const [isShowPass, setIsShowPass] = useState(false);
   const [FormData, setFormData] = useState<LoginForm>({
     email: "",
     password: "",
@@ -113,14 +115,39 @@ export default function Login({}: Props) {
               <label className="block mb-2.5 text-sm font-medium text-heading">
                 Ваш пароль
               </label>
-              <input
-                type="password"
-                value={FormData.password || ""}
-                onChange={onChange("password")}
-                className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium outline-0 rounded-sm text-white border border-default-medium"
-                placeholder="••••••••"
-                required
-              />
+              <div className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium rounded-sm text-white border border-default-medium flex">
+                <input
+                  type={isShowPass ? "text" : "password"}
+                  value={FormData.password || ""}
+                  onChange={onChange("password")}
+                  className="outline-none flex-1"
+                  placeholder="••••••••"
+                  required
+                />
+
+                <button
+                  onClick={() => setIsShowPass((prew) => !prew)}
+                  type="button"
+                  className="cursor-pointer"
+                >
+                  {isShowPass ? (
+                    <Image
+                      alt={"Show password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/openEye.svg"}
+                    />
+                  ) : (
+                    <Image
+                      alt={"Hide password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/closeEye.svg"}
+                    />
+                  )}
+                </button>
+              </div>
+
               {errors.password.map((item, index) => (
                 <AlertText key={index}>{item}</AlertText>
               ))}
@@ -149,8 +176,10 @@ export default function Login({}: Props) {
               </button>
             </div>
 
-            {errors.global ? <AlertText className="mb-3">{errors.global}</AlertText> : null}
-            
+            {errors.global ? (
+              <AlertText className="mb-3">{errors.global}</AlertText>
+            ) : null}
+
             <Button
               className="mx-auto max-w-[200px] w-full justify-center my-2.5"
               type="submit"

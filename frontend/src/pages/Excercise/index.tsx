@@ -137,18 +137,6 @@ export default function Index({}: Props) {
 
   return (
     <div className="max-w-[1400px] mx-auto px-2.5">
-      <div className="p-5 bg-[#00000048] my-2 w-full rounded-md flex flex-col items-center justify-center">
-        <h3 className="text-white font-semibold xl:text-[28px] text-[22px] mb-2">
-          Для большей эффективности пройдите небольшой опрос
-        </h3>
-        <p className="text-white text-[18px]">
-          Мы поможем вам подобрать упражнения!{" "}
-          <NextLink href={"/syrvey"} className="text-blue-600 cursor-pointer ml-2.5">
-            Для начала нажмите тут
-          </NextLink>
-        </p>
-      </div>
-
       <div className="py-[30px] mb-5">
         <h2 className="text-white font-semibold xl:text-[48px] text-[32px] mb-2">
           Каталог упражнений

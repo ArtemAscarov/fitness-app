@@ -27,8 +27,13 @@ export default function Footer({}: Props) {
                   Упражнения
                 </Link>
               </li>
+              <li>
+                <Link variant="whiteHover" href="/favorites">
+                  Любимое
+                </Link>
+              </li>
             </ul>
-          </div>
+          </div>  
 
           <div>
             <h3 className="text-lg font-semibold mb-4">Информация</h3>
@@ -40,7 +45,7 @@ export default function Footer({}: Props) {
                 </Link>
               </li>
               <li>
-                <Link variant="whiteHover" href="https://github.com/Artem34236">
+                <Link variant="whiteHover" href="">
                   Контакты
                 </Link>
               </li>

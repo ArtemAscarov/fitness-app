@@ -1,7 +1,13 @@
 import { AuthTokens } from "../types/type";
 
 class LocalTokensClass {
+  private checkWindow() {
+    if (typeof window === "undefined") return false;
+  }
+
   getTokens() {
+    if (!this.checkWindow()) return undefined;
+
     const refreshToken = localStorage.getItem("refreshToken");
     const accesToken = localStorage.getItem("accesToken");
 
@@ -14,6 +20,8 @@ class LocalTokensClass {
   }
 
   getAcces() {
+    if (!this.checkWindow()) return undefined;
+
     const accesToken = localStorage.getItem("accesToken");
     const sessionAccesToken = sessionStorage.getItem("accesToken");
 
@@ -21,6 +29,8 @@ class LocalTokensClass {
   }
 
   getRefresh() {
+    if (!this.checkWindow()) return undefined;
+
     const refreshToken = localStorage.getItem("refreshToken");
     const sessionRefreshToken = sessionStorage.getItem("refreshToken");
 
@@ -28,6 +38,8 @@ class LocalTokensClass {
   }
 
   clearTokens() {
+    if (!this.checkWindow()) return undefined;
+
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("accesToken");
 
@@ -36,11 +48,15 @@ class LocalTokensClass {
   }
 
   setTokens(tokens: AuthTokens) {
+    if (!this.checkWindow()) return undefined;
+
     localStorage.setItem("refreshToken", tokens.refreshToken);
     localStorage.setItem("accesToken", tokens.accesToken);
   }
 
   setSessionTokens(tokens: AuthTokens) {
+    if (!this.checkWindow()) return undefined;
+
     sessionStorage.setItem("refreshToken", tokens.refreshToken);
     sessionStorage.setItem("accesToken", tokens.accesToken);
   }

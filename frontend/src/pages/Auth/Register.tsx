@@ -1,14 +1,15 @@
 "use client";
 
-import { registerFn } from "@/entities/user/api/api";
+import { registerFn } from "@/entities/user/api";
 import { LocalTokens } from "@/shared/features/LocalTokens";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {};
 
@@ -25,6 +26,8 @@ type ErrorStateType = {
 
 export default function Register({}: Props) {
   const [isSaveTokens, setIsSaveTokens] = useState<boolean>(true);
+  const [isShowPass, setIsShowPass] = useState(false);
+  const [isShowSecondPass, setIsShowSecondPass] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -77,6 +80,17 @@ export default function Register({}: Props) {
     mutation.mutate(data);
   }
 
+  function onChange(key: "email" | "password" | "repeatedPassword") {
+    return (e: ChangeEvent<HTMLInputElement>) => {
+      setErrors((prew) => ({ ...prew, global: "", [key]: [] }));
+
+      setFormData((prew) => ({
+        ...prew,
+        [key]: e.target?.value || "",
+      }));
+    };
+  }
+
   return (
     <div className="min-h-[calc(100vh-64px)] px-2.5 py-10 flex items-center justify-center">
       <div className="flex items-center justify-center bg-[#1E2939] w-full max-w-[400px] text-white">
@@ -92,9 +106,7 @@ export default function Register({}: Props) {
               </label>
               <input
                 value={formData.email || ""}
-                onChange={(e) =>
-                  setFormData((prew) => ({ ...prew, email: e.target.value }))
-                }
+                onChange={onChange("email")}
                 type="email"
                 className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium outline-0 rounded-sm text-white border border-default-medium"
                 placeholder="example@company.com"
@@ -105,20 +117,44 @@ export default function Register({}: Props) {
               ))}
             </div>
 
-            <div className="mb-6">
+            <div className="mb-4">
               <label className="block mb-2.5 text-sm font-medium text-heading">
                 Ваш пароль
               </label>
-              <input
-                value={formData.password || ""}
-                onChange={(e) =>
-                  setFormData((prew) => ({ ...prew, password: e.target.value }))
-                }
-                type="password"
-                className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium outline-0 rounded-sm text-white border border-default-medium"
-                placeholder="••••••••"
-                required
-              />
+
+              <div className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium  rounded-sm text-white border border-default-medium flex">
+                <input
+                  value={formData.password || ""}
+                  onChange={onChange("password")}
+                  type={isShowPass ? "text" : "password"}
+                  className="outline-0 flex-1"
+                  placeholder="••••••••"
+                  required
+                />
+
+                <button
+                  onClick={() => setIsShowPass((prew) => !prew)}
+                  type="button"
+                  className="cursor-pointer"
+                >
+                  {isShowPass ? (
+                    <Image
+                      alt={"Show password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/openEye.svg"}
+                    />
+                  ) : (
+                    <Image
+                      alt={"Hide password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/closeEye.svg"}
+                    />
+                  )}
+                </button>
+              </div>
+
               {errors.password.map((item, index) => (
                 <AlertText key={index}>{item}</AlertText>
               ))}
@@ -128,19 +164,38 @@ export default function Register({}: Props) {
               <label className="block mb-2.5 text-sm font-medium text-heading">
                 Повторите пароль
               </label>
-              <input
-                value={formData.repeatedPassword || ""}
-                onChange={(e) =>
-                  setFormData((prew) => ({
-                    ...prew,
-                    repeatedPassword: e.target.value,
-                  }))
-                }
-                type="password"
-                className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium outline-0 rounded-sm text-white border border-default-medium"
-                placeholder="••••••••"
-                required
-              />
+              <div className="w-full rounded-base px-3 py-2.5 bg-neutral-secondary-medium rounded-sm text-white border border-default-medium flex">
+                <input
+                  value={formData.repeatedPassword || ""}
+                  onChange={onChange("repeatedPassword")}
+                  type={isShowSecondPass ? "text" : "password"}
+                  className="outline-0 flex-1"
+                  placeholder="••••••••"
+                  required
+                />
+
+                <button
+                  onClick={() => setIsShowSecondPass((prew) => !prew)}
+                  type="button"
+                  className="cursor-pointer"
+                >
+                  {isShowSecondPass ? (
+                    <Image
+                      alt={"Show password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/openEye.svg"}
+                    />
+                  ) : (
+                    <Image
+                      alt={"Hide password"}
+                      width={20}
+                      height={20}
+                      src={"/svg/closeEye.svg"}
+                    />
+                  )}
+                </button>
+              </div>
             </div>
 
             <div className="flex items-start my-2">
@@ -161,10 +216,12 @@ export default function Register({}: Props) {
               </div>
             </div>
 
-            {errors.global ? <AlertText className="mb-3">{errors.global}</AlertText> : null}
+            {errors.global ? (
+              <AlertText className="mb-3">{errors.global}</AlertText>
+            ) : null}
 
             <Button
-              className="mx-auto max-w-[200px] w-full justify-center my-2.5"
+              className="mx-auto max-w-[200px] w-full justify-center my-4"
               type="submit"
               variant="default"
             >
