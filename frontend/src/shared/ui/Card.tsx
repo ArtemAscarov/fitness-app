@@ -1,86 +1,99 @@
+"use client";
+
 import Image from "next/image";
-import Button from "./button";
-import useToggle from "../hooks/useToggle";
+import NextLink from "next/link";
+import { useState } from "react";
 import { cn } from "../lib/cn";
+import type { Excercise } from "@/entities/excercise/types";
 
-type Props = {};
+type Props = {
+  excercise: Excercise;
+};
 
-export default function Card({}: Props) {
-  const [instruction, toggle] = useToggle(false);
+const levelStyles: Record<string, string> = {
+  Новичок: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
+  Средний: "border-amber-500/40 bg-amber-500/15 text-amber-300",
+  Продвинутый: "border-rose-500/40 bg-rose-500/15 text-rose-300",
+};
+
+export default function Card({ excercise }: Props) {
+  const [liked, setLiked] = useState(false);
 
   return (
-    <div className="max-w-[610px]">
-      <div className="relative">
-        <div className="px-[15px] py-[5px] border border-green-700 rounded-xl bg-[#245e23] hover:bg-[#225021] cursor-pointer absolute right-2.5 top-2.5">
-          <p className="text-[#74f376]">Новичок</p>
-        </div>
+    <NextLink
+      href={`/excercise/${excercise.id}`}
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-[#1e2939] to-[#141d2b] shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-blue-500/40 hover:shadow-blue-500/10"
+    >
+      {/* Картинка */}
+      <div className="relative overflow-hidden">
         <img
-          className="max-h-[300px] w-full object-cover rounded-t-[10px]"
-          alt="trainMan2"
-          src={"/img/trainMan2.png"}
+          className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          alt={excercise.title}
+          src={excercise.image}
         />
-      </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#141d2b] via-transparent to-transparent" />
 
-      <div className="p-2.5">
-        <h4 className="text-white text-[20px] mb-1">Отжимания</h4>
-        <p className="text-[#99a1af] mb-2.5 text-[18px] max-w-[480px]">
-          Классическое упражнение для развития грудных мышц, трицепсов и плеч
-        </p>
-        <div className="flex items-center gap-2.5 mb-5">
-          <div className="px-[15px] py-[5px] border border-blue-800 rounded-xl bg-[#1d2e53] hover:bg-[#293e6c] cursor-pointer">
-            <p className="text-[#74b6f3]">#asdf</p>
-          </div>
-          <div className="px-[15px] py-[5px] border border-blue-800 rounded-xl bg-[#1d2e53] hover:bg-[#293e6c] cursor-pointer">
-            <p className="text-[#74b6f3]">#asdf</p>
-          </div>
-          <div className="px-[15px] py-[5px] border border-blue-800 rounded-xl bg-[#1d2e53] hover:bg-[#293e6c] cursor-pointer">
-            <p className="text-[#74b6f3]">#asdf</p>
-          </div>
-        </div>
-
-        <div className="flex justify-between mb-4">
-          <div className="flex items-center gap-2.5">
-            <Image
-              width={20}
-              height={20}
-              src="/svg/progress.svg"
-              alt="progres"
-            />
-            <p className="text-[#ebbd3e]">8 ккал/мин</p>
-          </div>
-        </div>
-
-        <div
+        <span
           className={cn(
-            !instruction ? "max-h-0" : "max-h-[9999px]",
-            "overflow-hidden transition-all duration-500"
+            "absolute right-3 top-3 rounded-full border px-3 py-1 text-sm font-medium backdrop-blur-sm",
+            levelStyles[excercise.level] ??
+              "border-blue-500/40 bg-blue-500/15 text-blue-300"
           )}
         >
-          <div className="bg-[#4444441c] rounded-md p-2.5 my-5">
-            <h5 className="text-white mb-2">Как выполнять:</h5>
-            <ol className="list-decimal list-inside text-[#99A197] space-y-2">
-              <li>Примите исходное положение </li>
-              <li>Выполните движение плавно и контролируемо</li>
-              <li>Сделайте паузу в точке максимального напряжения</li>
-              <li>Вернитесь в исходное положение</li>
-            </ol>
-          </div>
+          {excercise.level}
+        </span>
+
+        <button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            setLiked((v) => !v);
+          }}
+          className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition hover:bg-black/60"
+          aria-label="В избранное"
+        >
+          <Image
+            width={20}
+            height={20}
+            alt=""
+            src={liked ? "/svg/hurt.svg" : "/svg/emptyHurt.svg"}
+          />
+        </button>
+      </div>
+
+      {/* Контент */}
+      <div className="flex flex-1 flex-col p-4">
+        <h4 className="mb-1 text-xl font-semibold text-white transition-colors group-hover:text-blue-400">
+          {excercise.title}
+        </h4>
+        <p className="mb-4 line-clamp-2 text-sm text-[#99a1af]">
+          {excercise.description ?? "Описание появится позже."}
+        </p>
+
+        <div className="mb-4 flex flex-wrap gap-2">
+          {excercise.tags.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs text-blue-300"
+            >
+              #{tag}
+            </span>
+          ))}
         </div>
 
-        <div className="flex gap-[15px]">
-          <Button onClick={toggle} className="flex-1 justify-center">
-            {instruction ? "Скрыть" : "Подробнее"}
-          </Button>
-          <button className="cursor-pointer w-[50px] flex items-center justify-center">
-            <Image
-              width={25}
-              height={25}
-              alt="emptyHurt"
-              src={"/svg/emptyHurt.svg"}
-            />
-          </button>
+        <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-3">
+          <div className="flex items-center gap-2">
+            <Image width={18} height={18} src="/svg/progress.svg" alt="" />
+            <span className="text-sm text-amber-400">
+              {excercise.calory ?? "—"} ккал/мин
+            </span>
+          </div>
+          <span className="flex items-center gap-1 text-sm font-medium text-blue-400 transition-transform group-hover:translate-x-1">
+            Подробнее
+            <Image width={16} height={16} src="/svg/arrowRight.svg" alt="" />
+          </span>
         </div>
       </div>
-    </div>
+    </NextLink>
   );
 }

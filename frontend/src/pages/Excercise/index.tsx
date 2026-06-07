@@ -6,8 +6,8 @@ import Accordion from "@/shared/ui/Accordion";
 import Button from "@/shared/ui/button";
 import Card from "@/shared/ui/Card";
 import Link from "@/shared/ui/Link";
-import NextLink from "next/link";
 import Image from "next/image";
+import { excercises } from "@/entities/excercise/mock";
 
 type Props = {};
 
@@ -137,13 +137,22 @@ export default function Index({}: Props) {
 
   return (
     <div className="max-w-[1400px] mx-auto px-2.5">
-      <div className="py-[30px] mb-5">
-        <h2 className="text-white font-semibold xl:text-[48px] text-[32px] mb-2">
-          Каталог упражнений
-        </h2>
-        <p className="text-white text-[16px]">
-          Найдите подходящие упражнения для ваших тренирово.{" "}
-        </p>
+      <div className="relative my-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1d2a52] via-[#221c4a] to-[#3a1c4a] px-6 py-10 xl:px-12 xl:py-14">
+        <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="absolute -bottom-20 left-1/3 h-56 w-56 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="relative">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-sm font-medium text-blue-200 backdrop-blur-sm">
+            <Image alt="" width={18} height={18} src="/svg/lightning.svg" />
+            Более 100 упражнений в базе
+          </span>
+          <h2 className="mb-3 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-[32px] font-bold text-transparent xl:text-[52px]">
+            Каталог упражнений
+          </h2>
+          <p className="max-w-xl text-[16px] text-gray-300">
+            Найдите подходящие упражнения для ваших тренировок — с подробной
+            техникой, фото и пошаговыми инструкциями.
+          </p>
+        </div>
       </div>
 
       <div
@@ -176,6 +185,12 @@ export default function Index({}: Props) {
             <Image alt="filter" width={20} height={20} src={"svg/filter.svg"} />
             Фильтры
           </Button>
+          <Link
+            href="/excercise/create"
+            className="min-w-[120px] justify-center bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500"
+          >
+            + Создать
+          </Link>
         </div>
 
         <div>
@@ -200,11 +215,10 @@ export default function Index({}: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+      <div className="mb-10 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
+        {excercises.map((item) => (
+          <Card key={item.id} excercise={item} />
+        ))}
       </div>
     </div>
   );

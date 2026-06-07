@@ -1,9 +1,23 @@
-export type Excercise = {
+/** Секция в деталях упражнения: своё название, инструкция, фото и список пунктов. */
+export type ExcerciseSection = {
   id: number;
   title: string;
-  description?: string;
-  instructionTitle: string;
   instruction: string;
   image: string;
+  list: string[];
+};
+
+export type Excercise = {
+  id: number;
+  /** Базовые данные */
+  title: string;
+  description?: string;
+  level: string;
   calory?: number;
+  duration?: string;
+  tags: string[];
+  image: string;
+  /** Детали */
+  mainInfo: string;
+  sections: ExcerciseSection[];
 };

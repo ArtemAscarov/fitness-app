@@ -6,8 +6,8 @@ import Accordion from "@/shared/ui/Accordion";
 import Button from "@/shared/ui/button";
 import Card from "@/shared/ui/Card";
 import Link from "@/shared/ui/Link";
-import NextLink from "next/link";
 import Image from "next/image";
+import { excercises } from "@/entities/excercise/mock";
 
 type Props = {};
 
@@ -198,11 +198,10 @@ export default function Index({}: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(320px,1fr))] gap-5">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
+        {excercises.map((item) => (
+          <Card key={item.id} excercise={item} />
+        ))}
       </div>
     </div>
   );
