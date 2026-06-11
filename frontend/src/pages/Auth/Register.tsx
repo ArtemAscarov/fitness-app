@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {};
@@ -25,6 +26,7 @@ type ErrorStateType = {
 };
 
 export default function Register({}: Props) {
+  const router = useRouter();
   const [isSaveTokens, setIsSaveTokens] = useState<boolean>(true);
   const [isShowPass, setIsShowPass] = useState(false);
   const [isShowSecondPass, setIsShowSecondPass] = useState(false);
@@ -44,8 +46,13 @@ export default function Register({}: Props) {
     mutationFn: registerFn,
     onSuccess: (data) => {
       LocalTokens.clearTokens();
-      if (isSaveTokens) LocalTokens.setTokens(data);
-      LocalTokens.setSessionTokens(data);
+      if (isSaveTokens) {
+        LocalTokens.setTokens(data);
+      } else {
+        LocalTokens.setSessionTokens(data);
+      }
+
+      router.push("/excercise");
     },
     onError: (err) => {
       const e = err.response?.data as APIErrorType;

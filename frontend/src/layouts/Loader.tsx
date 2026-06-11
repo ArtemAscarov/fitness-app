@@ -10,11 +10,12 @@ type Props = {
 };
 
 export default function Loader({ children }: Props) {
-  const user = useQuery({
+  useQuery({
     queryKey: ["me"],
     queryFn: getMeFn,
     enabled: !!LocalTokens.getTokens(),
     staleTime: Infinity,
+    gcTime: Infinity,
   });
 
   return children;

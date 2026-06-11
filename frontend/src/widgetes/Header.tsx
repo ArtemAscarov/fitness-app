@@ -1,13 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { getMeFn } from "@/entities/user/api";
+import { LocalTokens } from "@/shared/features/LocalTokens";
 import Button from "@/shared/ui/button";
 import Link from "@/shared/ui/Link";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import { cn } from "@/shared/lib/cn";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  const {} = useQuery({
+    queryFn: getMeFn,
+    queryKey: ["me"],
+    gcTime: Infinity,
+    enabled: !!LocalTokens.getTokens(),
+    staleTime: Infinity,
+  });
 
   return (
     <header className="py-2.5 px-4 bg-[#1e2939] relative">
@@ -20,32 +27,16 @@ export default function Header() {
             </h3>
           </Link>
 
-          <div className="flex items-center gap-3">
-            <Link
-              variant="glass"
-              href="/auth/login"
-              className="font-bold items-center gap-2.5 text-[14px] lg:text-[16px] hidden md:flex"
-            >
-              <Image
-                width={24}
-                height={24}
-                alt="login"
-                src={"/svg/login.svg"}
-              />
-            </Link>
-            <Link
-              variant="glass"
-              href="/excercise"
-              className="font-bold items-center gap-2.5 text-[14px] lg:text-[16px] hidden md:flex"
-            >
-              <Image
-                width={24}
-                height={24}
-                alt="login"
-                src={"/svg/progress.svg"}
-              />
-            </Link>
-          </div>
+          <Link href="/auth/login" className="flex items-center gap-1 transition-all duration-200 group">
+            Войти{" "}
+            <Image
+              className="group-hover:translate-x-1 duration-200"
+              alt=""
+              width={20}
+              height={20}
+              src={"/svg/arrowRight.svg"}
+            />
+          </Link>
         </div>
       </nav>
     </header>

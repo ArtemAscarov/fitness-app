@@ -3,6 +3,7 @@ import { AuthTokens } from "../types/type";
 class LocalTokensClass {
   private checkWindow() {
     if (typeof window === "undefined") return false;
+    return true;
   }
 
   getTokens() {
@@ -16,7 +17,10 @@ class LocalTokensClass {
 
     if (refreshToken || accesToken) return { refreshToken, accesToken };
     if (sessionRefreshToken || sessionAccesToken)
-      return { sessionRefreshToken, sessionAccesToken };
+      return {
+        refreshToken: sessionRefreshToken,
+        accesToken: sessionAccesToken,
+      };
   }
 
   getAcces() {

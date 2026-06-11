@@ -1,5 +1,4 @@
 import Link from "@/shared/ui/Link";
-import Image from "next/image";
 
 type Props = {};
 

@@ -9,14 +9,10 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {};
-
-type LoginForm = {
-  email: string;
-  password: string;
-};
 
 type ErrorStateType = {
   email: string[];
@@ -25,9 +21,10 @@ type ErrorStateType = {
 };
 
 export default function Login({}: Props) {
+  const router = useRouter();
   const [isSaveTokens, setIsSaveTokens] = useState(true);
   const [isShowPass, setIsShowPass] = useState(false);
-  const [FormData, setFormData] = useState<LoginForm>({
+  const [FormData, setFormData] = useState<Parameters<typeof loginFn>[0]>({
     email: "",
     password: "",
   });
@@ -38,15 +35,29 @@ export default function Login({}: Props) {
     global: "",
   });
 
-  const mutation = useMutation<AuthTokens, AxiosError, LoginForm>({
+  const mutation = useMutation<
+    AuthTokens,
+    AxiosError,
+    Parameters<typeof loginFn>[0]
+  >({
     mutationFn: loginFn,
+
     onError: (e) => {
-      const error = e.response?.data as APIErrorType;
+      const error = e.response?.data as APIErrorType | undefined;
       let localErrors: ErrorStateType = {
         email: [],
         password: [],
         global: "",
       };
+
+      if (!error) {
+        setErrors({
+          email: [],
+          password: [],
+          global: "Сервер недоступен, попробуйте позже",
+        });
+        return;
+      }
 
       if (Array.isArray(error)) {
         for (let i = 0; i < error.length; i++) {
@@ -55,16 +66,20 @@ export default function Login({}: Props) {
             error[i].message,
           ];
         }
-
-        setErrors((prew) => ({ ...prew, ...localErrors }));
       } else localErrors.global = error.message;
 
       setErrors(localErrors);
     },
+
     onSuccess: (data) => {
-      if (isSaveTokens) LocalTokens.setTokens(data);
       LocalTokens.clearTokens();
-      LocalTokens.setSessionTokens(data);
+      if (isSaveTokens) {
+        LocalTokens.setTokens(data);
+      } else {
+        LocalTokens.setSessionTokens(data);
+      }
+
+      router.push("/excercise");
     },
   });
 
@@ -168,12 +183,6 @@ export default function Login({}: Props) {
                   Запомнить меня
                 </label>
               </div>
-              <button
-                type="button"
-                className="ms-auto text-sm font-medium text-fg-brand hover:underline cursor-pointer"
-              >
-                Забыли пароль?
-              </button>
             </div>
 
             {errors.global ? (
