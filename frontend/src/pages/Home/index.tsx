@@ -104,7 +104,7 @@ export default function Index({}: Props) {
             </p>
 
             <div className="flex gap-4">
-              <Link href="/excercise">Начать бесплатно</Link>
+              <Link href="/exercise">Начать бесплатно</Link>
             </div>
 
             <div className="flex gap-6 text-sm text-gray-400">
@@ -128,8 +128,8 @@ export default function Index({}: Props) {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center p-2.5 bg-fuchsia-700 rounded-full">
                     <Image
-                      src={"/svg/syrvey.svg"}
-                      alt="syrvey"
+                      src={"/svg/survey.svg"}
+                      alt="survey"
                       width={20}
                       height={20}
                     />
@@ -232,10 +232,10 @@ export default function Index({}: Props) {
               className={`w-10 h-10 flex items-center justify-center rounded-lg bg-blue-700 mb-4 group-hover:scale-125`}
             >
               <Image
-                src={"svg/syrvey.svg"}
+                src={"svg/survey.svg"}
                 width={20}
                 height={20}
-                alt="syrvey"
+                alt="survey"
               />
             </div>
 
@@ -518,7 +518,7 @@ export default function Index({}: Props) {
                   </div>
 
                   <Link
-                    href="/excercise"
+                    href="/exercise"
                     className="justify-center bg-indigo-600"
                   >
                     Попробовать бесплатно

@@ -30,7 +30,7 @@ export default function Link({
       break;
     default:
       buttonVariant =
-        "bg-[#2563eb] text-white rounded-sm hover:bg-[#1e40af] transition duration-300 lg:px-4 lg:py-2.5 py-2 px-3";
+        "bg-gradient-to-r from-blue-900 hover:to-red-800 hover:from-blue-800 to-red-900 text-white rounded-sm transition duration-300 lg:px-4 lg:py-2.5 py-2 px-3";
   }
 
   return (

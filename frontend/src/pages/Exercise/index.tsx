@@ -137,68 +137,21 @@ export default function Index({}: Props) {
 
   return (
     <div className="max-w-[1400px] mx-auto px-2.5">
-
-      <div className="py-[30px]">
-        <h2 className="text-white font-semibold xl:text-[48px] text-[32px] mb-2">
-          Избранные упражнения
-        </h2>
-      </div>
-
-      <div
-        className={cn(
-          "bg-[#1e2939] rounded-xl p-2.5 xl:p-3 border border-neutral-700 mb-5 transition-all duration-200 overflow-hidden max-w-[1400px] mx-auto",
-          isOpenFilters ? "max-h-[1000px]" : "max-h-[72px]"
-        )}
-      >
-        <div
-          className={cn(
-            "flex gap-2.5 mb-5",
-            isOpenFilters
-              ? "border-b border-neutral-700 pb-[15px]"
-              : "border-b border-[#0000]"
-          )}
-        >
-          <label className="bg-[#364153] rounded-[10px] w-full px-[15px] py-2.5 flex gap-2.5 items-center">
-            <Image alt="loop" width={20} height={20} src={"/svg/loop.svg"} />
-            <input
-              className="outline-none text-white w-full"
-              placeholder="Поиск упражнений..."
-              type="text"
-            />
-          </label>
-          <Button
-            onClick={toggle}
-            variant="ghost"
-            className="border border-black min-w-[120px]"
-          >
-            <Image alt="filter" width={20} height={20} src={"svg/filter.svg"} />
-            Фильтры
-          </Button>
-        </div>
-
-        <div>
-          <h3 className="text-white text-[18px] font-bold mb-3">Фильтры</h3>
-
-          <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-x-5 gap-y-5">
-            {filters.map((item, index) => (
-              <Accordion key={index} name={item.name}>
-                {item.children.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`?search=${item.slug}`}
-                    className="text-[#dad3d9] border border-[#b9b3b8be] py-1 text-[14px]"
-                    variant="ghost"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </Accordion>
-            ))}
-          </div>
+      <div className="relative my-6 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-[#1d2a52] via-[#221c4a] to-[#3a1c4a] p-6 xl:p-12">
+        <div className="absolute -right-16 -top-16 h-56 w-56 rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="absolute -bottom-20 left-1/3 h-56 w-56 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="relative">
+          <h2 className="mb-3 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-[32px] font-bold text-transparent xl:text-[52px]">
+            Каталог упражнений
+          </h2>
+          <p className="max-w-xl text-[16px] text-gray-300">
+            Найдите подходящие упражнения для ваших тренировок — с подробной
+            техникой, фото и пошаговыми инструкциями.
+          </p>
         </div>
       </div>
 
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
+      <div className="mb-10 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-5">
         {exercises.map((item) => (
           <Card key={item.id} exercise={item} />
         ))}

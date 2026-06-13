@@ -52,7 +52,7 @@ export default function Register({}: Props) {
         LocalTokens.setSessionTokens(data);
       }
 
-      router.push("/excercise");
+      router.push("/exercise");
     },
     onError: (err) => {
       const e = err.response?.data as APIErrorType;
@@ -78,11 +78,19 @@ export default function Register({}: Props) {
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (formData.password.length < 6)
+      return setErrors((prew) => ({
+        ...prew,
+        password: ["Пароль должен быть минимум 6 символов"],
+      }));
+
     if (formData.password !== formData.repeatedPassword)
       return setErrors((prew) => ({
         ...prew,
         global: "Пароли должны совпадать",
       }));
+
     const { repeatedPassword, ...data } = formData;
     mutation.mutate(data);
   }

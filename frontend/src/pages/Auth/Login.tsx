@@ -79,12 +79,18 @@ export default function Login({}: Props) {
         LocalTokens.setSessionTokens(data);
       }
 
-      router.push("/excercise");
+      router.push("/exercise");
     },
   });
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (FormData.password.length < 6)
+      return setErrors((prew) => ({
+        ...prew,
+        password: ["Пароль должен быть минимум 6 символов"],
+      }));
 
     mutation.mutate(FormData);
   };

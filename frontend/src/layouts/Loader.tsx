@@ -1,7 +1,6 @@
 "use client";
 
-import { getMeFn } from "@/entities/user/api";
-import { LocalTokens } from "@/shared/features/LocalTokens";
+import { getUserQueryOptions } from "@/entities/user/features/getUserQueryOptions";
 import { useQuery } from "@tanstack/react-query";
 import { ReactNode } from "react";
 
@@ -10,13 +9,7 @@ type Props = {
 };
 
 export default function Loader({ children }: Props) {
-  useQuery({
-    queryKey: ["me"],
-    queryFn: getMeFn,
-    enabled: !!LocalTokens.getTokens(),
-    staleTime: Infinity,
-    gcTime: Infinity,
-  });
+  useQuery(getUserQueryOptions());
 
   return children;
 }

@@ -18,15 +18,15 @@ export default function Button({
   let buttonVariant = "";
   switch (variant) {
     case "glass":
-      buttonVariant = "rounded-sm";
+      buttonVariant = "lg:px-4 lg:py-2.5 py-2 px-3 rounded-sm";
       break;
     case "ghost":
       buttonVariant =
-        "text-white hover:bg-[#ffffff34] transition duration-300 max-w-max rounded-sm";
+        "text-white transition duration-300 max-w-max rounded-sm hover:scale-120 p-2";
       break;
     default:
       buttonVariant =
-        "bg-[#2563eb] text-white rounded-sm hover:bg-[#1e40af] transition duration-300";
+        "lg:px-4 lg:py-2.5 py-2 px-3 bg-gradient-to-r from-blue-900 hover:to-red-800 hover:from-blue-800 to-red-900 text-white rounded-sm transition duration-300 lg:px-4 lg:py-2.5 py-2 px-3";
   }
 
   return (
@@ -34,9 +34,9 @@ export default function Button({
       type={type}
       onClick={onClick}
       className={cn(
-        "lg:px-4 lg:py-2.5 py-2 px-3 flex items-center cursor-pointer",
+        " flex items-center cursor-pointer",
         buttonVariant,
-        className
+        className,
       )}
     >
       {children}
