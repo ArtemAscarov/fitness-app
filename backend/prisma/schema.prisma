@@ -33,13 +33,13 @@ model Category {
 model Favorite {
   id Int @unique @default(autoincrement())
 
-  excerciseId Int
-  userId      Int
+  exerciseId Int
+  userId     Int
 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  excercise Exercise @relation(fields: [excerciseId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
 
-  @@unique([excerciseId, userId])
+  @@unique([exerciseId, userId])
 }
 
 model Exercise {

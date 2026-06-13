@@ -1,5 +1,3 @@
-import { Response } from "express";
-
 export type AuthJwtPayload = {
   id: number;
   email: string;

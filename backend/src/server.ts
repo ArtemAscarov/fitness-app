@@ -9,7 +9,7 @@ import authRouter from "./routes/auth.routes";
 import categoryRouter from "./routes/category.routes";
 import GlobalErrorValidator from "./middleware/GlobalErrorValidator";
 import refreshRouter from "./routes/refresh.routes";
-import ExcerciseRoter from "./routes/excercise.routes";
+import ExerciseRoter from "./routes/exercise.routes";
 import FavoriteRoter from "./routes/favorite.routes";
 import UserRouter from "./routes/user.routes";
 
@@ -21,6 +21,7 @@ const generalRateLimit = rateLimit({
 const port = process.env?.PORT || 3001;
 
 const app = express();
+
 
 app.use(
   cors({
@@ -37,7 +38,7 @@ app.use(generalRateLimit);
 app.use(authRouter);
 app.use("/category", categoryRouter);
 app.use("/refresh", refreshRouter);
-app.use("/excercise", ExcerciseRoter);
+app.use("/exercise", ExerciseRoter);
 app.use("/favorite", FavoriteRoter);
 app.use("/users", UserRouter);
 

@@ -3,32 +3,32 @@ import { CustomError } from "../util/CustomError";
 import { FavoriteSchemaType } from "../validators/favorite.validator";
 
 class FavoriteServiceClass {
-  async delete(userId: number, { excerciseId }: FavoriteSchemaType) {
+  async delete(userId: number, { exerciseId }: FavoriteSchemaType) {
     const data = await prisma.favorite.delete({
       where: {
-        excerciseId_userId: {
+        exerciseId_userId: {
           userId,
-          excerciseId,
+          exerciseId,
         },
       },
     });
 
     if (!data) throw new CustomError("Ошибка при удалении favorite", 500);
 
-    return excerciseId;
+    return exerciseId;
   }
 
-  async create(userId: number, { excerciseId }: FavoriteSchemaType) {
+  async create(userId: number, { exerciseId }: FavoriteSchemaType) {
     const data = await prisma.favorite.create({
       data: {
         userId,
-        excerciseId,
+        exerciseId,
       },
     });
 
     if (!data) throw new CustomError("Ошибка при добавлении favorite", 500);
 
-    return excerciseId;
+    return exerciseId;
   }
 }
 

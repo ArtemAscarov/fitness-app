@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { FavoriteController } from "../controllers/favorite.contollers";
+import { FavoriteController } from "../controllers/favorite.controller";
 import { CheckAuth } from "../middleware/CheckAuth";
 import { bodyValidator } from "../middleware/Validators";
 import { FavoriteSchema } from "../validators/favorite.validator";

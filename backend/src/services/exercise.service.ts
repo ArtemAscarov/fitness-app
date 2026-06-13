@@ -3,13 +3,13 @@ import { AuthJwtPayload } from "../lib/types/type";
 import { prisma } from "../prisma";
 import { CustomError } from "../util/CustomError";
 import {
-  ExcerciseCategroyUpdateType,
-  ExcerciseFiltersType,
-  ExcerciseSchemaPatchType,
-  ExcerciseSchemaType,
+  ExerciseCategroyUpdateType,
+  ExerciseFiltersType,
+  ExerciseSchemaPatchType,
+  ExerciseSchemaType,
 } from "../validators/exercise.validator";
 
-class ExcerciseServiceClass {
+class ExerciseServiceClass {
   async getOne(id: number) {
     const data = await prisma.exercise.findUnique({
       where: {
@@ -22,7 +22,7 @@ class ExcerciseServiceClass {
     return data;
   }
 
-  async getAll(query: ExcerciseFiltersType, user?: AuthJwtPayload) {
+  async getAll(query: ExerciseFiltersType, user?: AuthJwtPayload) {
     const where: Prisma.ExerciseWhereInput = {};
     const include: any = { category: true };
 
@@ -81,10 +81,10 @@ class ExcerciseServiceClass {
 
     if (!data) throw new CustomError("Ошибка при получении упражнений", 500);
 
-    const reducedData = data.map(({ favorites, ...excercise }) => {
+    const reducedData = data.map(({ favorites, ...exercise }) => {
 
       return {
-        ...excercise,
+        ...exercise,
         isFavorite: user ? favorites.length > 0 : false,
       };
     });
@@ -104,7 +104,7 @@ class ExcerciseServiceClass {
     return data;
   }
 
-  async create(body: ExcerciseSchemaType) {
+  async create(body: ExerciseSchemaType) {
     const data = await prisma.exercise.create({
       data: { ...body },
     });
@@ -114,7 +114,7 @@ class ExcerciseServiceClass {
     return data;
   }
 
-  async update(id: number, body: ExcerciseSchemaPatchType) {
+  async update(id: number, body: ExerciseSchemaPatchType) {
     const data = await prisma.exercise.update({
       where: { id },
       data: body,
@@ -126,11 +126,11 @@ class ExcerciseServiceClass {
   }
 
   async bindToCategory({
-    excerciseId,
+    exerciseId,
     categoryId,
-  }: ExcerciseCategroyUpdateType) {
+  }: ExerciseCategroyUpdateType) {
     const data = await prisma.exercise.update({
-      where: { id: excerciseId },
+      where: { id: exerciseId },
       data: {
         category: {
           connect: { id: categoryId },
@@ -144,12 +144,12 @@ class ExcerciseServiceClass {
   }
 
   async toreCategoryConnection({
-    excerciseId,
+    exerciseId,
     categoryId,
-  }: ExcerciseCategroyUpdateType) {
+  }: ExerciseCategroyUpdateType) {
     const data = await prisma.exercise.update({
       where: {
-        id: excerciseId,
+        id: exerciseId,
       },
       data: {
         category: {
@@ -166,4 +166,4 @@ class ExcerciseServiceClass {
   }
 }
 
-export const ExcerciseService = new ExcerciseServiceClass();
+export const ExerciseService = new ExerciseServiceClass();

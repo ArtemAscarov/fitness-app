@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const ExcerciseSchema = z.object({
+export const ExerciseSchema = z.object({
   title: z
     .string()
     .max(256, "Максимум 512 символов")
@@ -22,7 +22,7 @@ export const ExcerciseSchema = z.object({
   calory: z.number().optional(),
 });
 
-export const ExcerciseFilters = z.object({
+export const ExerciseFilters = z.object({
   title: z
     .string()
     .max(256, "Максимум 512 символов")
@@ -38,16 +38,16 @@ export const ExcerciseFilters = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(20),
 });
 
-export const ExcerciseCategroyUpdate = z.object({
-  excerciseId: z.coerce.number(),
+export const ExerciseCategroyUpdate = z.object({
+  exerciseId: z.coerce.number(),
   categoryId: z.coerce.number(),
 });
 
-export const ExcerciseSchemaPatch = ExcerciseSchema.partial().strict();
+export const ExerciseSchemaPatch = ExerciseSchema.partial().strict();
 
-export type ExcerciseCategroyUpdateType = z.infer<
-  typeof ExcerciseCategroyUpdate
+export type ExerciseCategroyUpdateType = z.infer<
+  typeof ExerciseCategroyUpdate
 >;
-export type ExcerciseSchemaType = z.infer<typeof ExcerciseSchema>;
-export type ExcerciseSchemaPatchType = z.infer<typeof ExcerciseSchemaPatch>;
-export type ExcerciseFiltersType = z.infer<typeof ExcerciseFilters>;
+export type ExerciseSchemaType = z.infer<typeof ExerciseSchema>;
+export type ExerciseSchemaPatchType = z.infer<typeof ExerciseSchemaPatch>;
+export type ExerciseFiltersType = z.infer<typeof ExerciseFilters>;

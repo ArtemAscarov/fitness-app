@@ -11,7 +11,7 @@ class UserControllerClass {
         .status(500)
         .json("Ошибка при получении пользователя с помощью id");
 
-    return data;
+    return res.status(200).json(data);
   }
 
   async getUsers(req: Request, res: Response) {
@@ -20,7 +20,7 @@ class UserControllerClass {
     if (!data)
       return res.status(500).json("Ошибка при получении пользователей");
 
-    return data;
+    return res.status(200).json(data);
   }
 
   async getMe(req: Request, res: Response) {
@@ -33,7 +33,7 @@ class UserControllerClass {
         .status(500)
         .json("Ошибка при получении пользователя с помощью токенов");
 
-    return data;
+    return res.status(200).json(data);
   }
 }
 
