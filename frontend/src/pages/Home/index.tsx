@@ -126,18 +126,18 @@ export default function Index({}: Props) {
             <div className="space-y-3">
               <div className="flex justify-between items-center bg-[#132033] p-4 rounded-xl">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center p-2.5 bg-fuchsia-700 rounded-full">
+                  <div className="flex items-center justify-center p-2.5 bg-blue-700 rounded-full">
                     <Image
-                      src={"/svg/survey.svg"}
-                      alt="survey"
+                      src={"/svg/users.svg"}
+                      alt="users"
                       width={20}
                       height={20}
                     />
                   </div>
                   <div>
-                    <div className="font-medium">Установите цели</div>
+                    <div className="font-medium">База упражнений</div>
                     <div className="text-sm text-gray-400">
-                      Это займёт не более 2 минут
+                      100+ упражнений с фильтрами
                     </div>
                   </div>
                 </div>
@@ -151,17 +151,19 @@ export default function Index({}: Props) {
 
               <div className="flex justify-between items-center bg-[#132033] p-4 rounded-xl">
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center p-2.5 bg-blue-700 rounded-full">
+                  <div className="flex items-center justify-center p-2.5 bg-fuchsia-700 rounded-full">
                     <Image
-                      src={"/svg/users.svg"}
-                      alt="users"
+                      src={"/svg/heart.svg"}
+                      alt="heart"
                       width={20}
                       height={20}
                     />
                   </div>
                   <div>
-                    <div className="font-medium">Подберите упражнения</div>
-                    <div className="text-sm text-gray-400">100+ вариантов</div>
+                    <div className="font-medium">Избранное</div>
+                    <div className="text-sm text-gray-400">
+                      Сохраняйте любимые упражнения
+                    </div>
                   </div>
                 </div>
                 <Image
@@ -176,16 +178,16 @@ export default function Index({}: Props) {
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center p-2.5 bg-amber-700 rounded-full">
                     <Image
-                      src={"/svg/progress.svg"}
-                      alt="progres"
+                      src={"/svg/clock.svg"}
+                      alt="clock"
                       width={20}
                       height={20}
                     />
                   </div>
                   <div>
-                    <div className="font-medium">Отслеживайте результаты</div>
+                    <div className="font-medium">Калории и время</div>
                     <div className="text-sm text-gray-400">
-                      В реальном времени
+                      Калорийность и длительность упражнений
                     </div>
                   </div>
                 </div>
@@ -231,18 +233,13 @@ export default function Index({}: Props) {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-lg bg-blue-700 mb-4 group-hover:scale-125`}
             >
-              <Image
-                src={"svg/survey.svg"}
-                width={20}
-                height={20}
-                alt="survey"
-              />
+              <Image src={"svg/users.svg"} width={20} height={20} alt="users" />
             </div>
 
-            <h3 className="font-semibold mb-2">Персональные цели</h3>
+            <h3 className="font-semibold mb-2">База упражнений</h3>
             <p className="text-gray-400 text-sm">
-              Определите свои цели и получите персональные рекомендации по
-              тренировкам
+              Более 100 упражнений с фильтрами по типу тренировки и уровню
+              подготовки
             </p>
           </div>
 
@@ -250,12 +247,17 @@ export default function Index({}: Props) {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-lg bg-fuchsia-700 mb-4 group-hover:scale-125`}
             >
-              <Image src={"svg/users.svg"} width={20} height={20} alt="users" />
+              <Image
+                src={"svg/syrvey.svg"}
+                width={20}
+                height={20}
+                alt="survey"
+              />
             </div>
 
-            <h3 className="font-semibold mb-2">База упражнений</h3>
+            <h3 className="font-semibold mb-2">Подробные инструкции</h3>
             <p className="text-gray-400 text-sm">
-              Более 100 упражнений с подробными описаниями и видео-инструкциями
+              Пошаговые секции с фото и описанием техники для каждого упражнения
             </p>
           </div>
 
@@ -263,12 +265,12 @@ export default function Index({}: Props) {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-lg bg-emerald-700 mb-4 group-hover:scale-125`}
             >
-              <Image src={"svg/prize.svg"} width={20} height={20} alt="prize" />
+              <Image src={"svg/heart.svg"} width={20} height={20} alt="heart" />
             </div>
 
-            <h3 className="font-semibold mb-2">Счётчик калорий</h3>
+            <h3 className="font-semibold mb-2">Избранное</h3>
             <p className="text-gray-400 text-sm">
-              Отслеживайте потребление и расход калорий для достижения целей
+              Сохраняйте понравившиеся упражнения и быстро возвращайтесь к ним
             </p>
           </div>
 
@@ -276,24 +278,19 @@ export default function Index({}: Props) {
             <div
               className={`w-10 h-10 flex items-center justify-center rounded-lg bg-amber-700 mb-4 group-hover:scale-125`}
             >
-              <Image
-                src={"svg/progress.svg"}
-                width={20}
-                height={20}
-                alt="progress"
-              />
+              <Image src={"svg/clock.svg"} width={20} height={20} alt="clock" />
             </div>
 
-            <h3 className="font-semibold mb-2">Трекер прогресса</h3>
+            <h3 className="font-semibold mb-2">Калории и время</h3>
             <p className="text-gray-400 text-sm">
-              Визуализируйте свой прогресс и отмечайте достижения
+              Для каждого упражнения указаны калорийность и длительность
             </p>
           </div>
         </div>
       </section>
 
       <section className="px-2.5 relative">
-        <div className="xl:bg-[#132033] rounded-xl mx-auto max-w-[1600px] w-full flex xl:flex-row flex-col justify-between">
+        <div className="xl:bg-[#132033] rounded-xl mx-auto max-w-[1600px] w-full flex xl:flex-row flex-col justify-between overflow-hidden">
           <div className="xl:w-[65%] xl:p-10 p-3 max-w-[980px] mx-auto">
             <h3 className="text-white text-[30px] font-semibold xl:mb-[30px] mb-[15px]">
               Как это работает?
@@ -307,11 +304,11 @@ export default function Index({}: Props) {
 
                 <div>
                   <h5 className="text-white text-[18px] md:text-[20px] xl:text-[22px] mb-2.5">
-                    Пройдите короткий опрос
+                    Создайте аккаунт
                   </h5>
                   <p className="max-w-[400px] text-gray-400 text-[14px] md:text-[16px] xl:text-[18px]">
-                    Расскажите о своих целях, уровне подготовки и предпочтениях.
-                    Это займет всего 2 минуты.
+                    Зарегистрируйтесь за пару минут и получите доступ ко всему
+                    каталогу упражнений.
                   </p>
                 </div>
               </div>
@@ -324,11 +321,11 @@ export default function Index({}: Props) {
 
                 <div>
                   <h5 className="text-white text-[18px] md:text-[20px] xl:text-[22px] mb-2.5">
-                    Получите персональный план
+                    Откройте каталог упражнений
                   </h5>
                   <p className="max-w-[400px] text-gray-400 text-[14px] md:text-[16px] xl:text-[18px]">
-                    На основе ваших ответов мы подберем упражнения и
-                    рекомендации специально для вас.
+                    Используйте фильтры по типу тренировки и уровню, чтобы найти
+                    подходящие упражнения.
                   </p>
                 </div>
               </div>
@@ -341,11 +338,11 @@ export default function Index({}: Props) {
 
                 <div>
                   <h5 className="text-white text-[18px] md:text-[20px] xl:text-[22px] mb-2.5">
-                    Тренируйтесь и отслеживайте прогресс
+                    Изучите технику
                   </h5>
                   <p className="max-w-[400px] text-gray-400 text-[14px] md:text-[16px] xl:text-[18px]">
-                    Выполняйте упражнения, записывайте результаты и наблюдайте
-                    за своим прогрессом в реальном времени.
+                    Открывайте упражнение и следуйте пошаговым инструкциям с
+                    фото и описанием техники.
                   </p>
                 </div>
               </div>
@@ -358,11 +355,11 @@ export default function Index({}: Props) {
 
                 <div>
                   <h5 className="text-white text-[18px] md:text-[20px] xl:text-[22px] mb-2.5">
-                    Достигайте своих целей
+                    Собирайте избранное
                   </h5>
                   <p className="max-w-[400px] text-gray-400 text-[14px] md:text-[16px] xl:text-[18px]">
-                    Отмечайте достижения, корректируйте план и продолжайте
-                    совершенствоваться каждый день.
+                    Сохраняйте любимые упражнения, чтобы быстро возвращаться к
+                    ним в любой момент.
                   </p>
                 </div>
               </div>
@@ -475,10 +472,9 @@ export default function Index({}: Props) {
                   />
 
                   <div>
-                    <p className="font-semibold">Быстрые результаты</p>
+                    <p className="font-semibold">Понятная техника</p>
                     <p className="text-white/80 text-sm">
-                      Персонализированный подход обеспечивает эффективный
-                      прогресс
+                      Пошаговые инструкции с фото к каждому упражнению
                     </p>
                   </div>
                 </div>
@@ -492,9 +488,10 @@ export default function Index({}: Props) {
                   />
 
                   <div>
-                    <p className="font-semibold">Поддержка сообщества</p>
+                    <p className="font-semibold">Бесплатный доступ</p>
                     <p className="text-white/80 text-sm">
-                      Присоединяйтесь к активному сообществу единомышленников
+                      Весь каталог упражнений доступен бесплатно и без
+                      ограничений
                     </p>
                   </div>
                 </div>
