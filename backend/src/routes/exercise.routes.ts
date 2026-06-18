@@ -48,7 +48,7 @@ ExerciseRoter.patch(
 ExerciseRoter.get(
   "/:id",
   paramValidator(IdParamsSchema),
-  CheckAuth,
+  CheckAuth(),
   ExerciseController.getOne,
 );
 

@@ -1,5 +1,19 @@
 import z from "zod";
 
+const ExerciseSection = z.object({
+  id: z.int().optional(),
+  title: z
+    .string()
+    .max(256, "Максимум 512 символов")
+    .min(1, "Минимум 1 символ"),
+  description: z
+    .string()
+    .max(512, "Максимум 512 символов")
+    .min(1, "Минимум 1 символ"),
+  image: z.url().optional(),
+  list: z.array(z.string()).default([]),
+});
+
 export const ExerciseSchema = z.object({
   title: z
     .string()
@@ -10,16 +24,11 @@ export const ExerciseSchema = z.object({
     .max(512, "Максимум 512 символов")
     .min(1, "Минимум 1 символ")
     .optional(),
-  instructionTitle: z
-    .string()
-    .max(256, "Максимум 512 символов")
-    .min(1, "Минимум 1 символ"),
-  instruction: z
-    .string()
-    .max(512, "Максимум 512 символов")
-    .min(1, "Минимум 1 символ"),
+  duration: z.string().optional(),
   image: z.url("Некорретная ссылка"),
   calory: z.number().optional(),
+  levelId: z.coerce.number(),
+  exerciseSections: z.array(ExerciseSection).default([]),
 });
 
 export const ExerciseFilters = z.object({
@@ -45,9 +54,7 @@ export const ExerciseCategroyUpdate = z.object({
 
 export const ExerciseSchemaPatch = ExerciseSchema.partial().strict();
 
-export type ExerciseCategroyUpdateType = z.infer<
-  typeof ExerciseCategroyUpdate
->;
+export type ExerciseCategroyUpdateType = z.infer<typeof ExerciseCategroyUpdate>;
 export type ExerciseSchemaType = z.infer<typeof ExerciseSchema>;
 export type ExerciseSchemaPatchType = z.infer<typeof ExerciseSchemaPatch>;
 export type ExerciseFiltersType = z.infer<typeof ExerciseFilters>;

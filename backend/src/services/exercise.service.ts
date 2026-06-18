@@ -15,6 +15,9 @@ class ExerciseServiceClass {
       where: {
         id,
       },
+      include: {
+        exerciseSections: true,
+      },
     });
 
     if (!data) throw new CustomError("Ошибка при получении упражнения", 500);
@@ -82,14 +85,21 @@ class ExerciseServiceClass {
     if (!data) throw new CustomError("Ошибка при получении упражнений", 500);
 
     const reducedData = data.map(({ favorites, ...exercise }) => {
-
       return {
         ...exercise,
         isFavorite: user ? favorites.length > 0 : false,
       };
     });
 
-    return { count, results: reducedData };
+    return {
+      page: query.page,
+      count,
+      pageCount: Math.ceil(count / query.limit),
+      results: reducedData,
+      limit: query.limit,
+      isHasNext: count > query.limit * query.page,
+      isHasPrev: query.page > 1,
+    };
   }
 
   async delete(id: number) {
@@ -105,8 +115,17 @@ class ExerciseServiceClass {
   }
 
   async create(body: ExerciseSchemaType) {
+    const { exerciseSections, ...newBody } = body;
+
+    const newData = exerciseSections.filter((i) => !i.id) || [];
+
     const data = await prisma.exercise.create({
-      data: { ...body },
+      data: {
+        ...newBody,
+        exerciseSections: {
+          createMany: { data: newData },
+        },
+      },
     });
 
     if (!data) throw new CustomError("Ошибка при создании упражнения", 500);
@@ -115,9 +134,34 @@ class ExerciseServiceClass {
   }
 
   async update(id: number, body: ExerciseSchemaPatchType) {
+    const { exerciseSections, ...other } = body;
+
+    const newExercises = exerciseSections?.filter((i) => !i.id) || [];
+    const oldExercises = exerciseSections?.filter((i) => i.id) || [];
+    const keepIds = oldExercises.map((s) => s.id!);
+
     const data = await prisma.exercise.update({
       where: { id },
-      data: body,
+      data: {
+        ...other,
+
+        ...(exerciseSections && {
+          exerciseSections: {
+            update: oldExercises.map(({ id, ...i }) => ({
+              where: {
+                id: id,
+              },
+              data: i,
+            })),
+            createMany: {
+              data: newExercises,
+            },
+            deleteMany: {
+              id: { notIn: keepIds },
+            },
+          },
+        }),
+      },
     });
 
     if (!data) throw new CustomError("Ошибка при обновлении упражнения", 500);
@@ -125,10 +169,7 @@ class ExerciseServiceClass {
     return data;
   }
 
-  async bindToCategory({
-    exerciseId,
-    categoryId,
-  }: ExerciseCategroyUpdateType) {
+  async bindToCategory({ exerciseId, categoryId }: ExerciseCategroyUpdateType) {
     const data = await prisma.exercise.update({
       where: { id: exerciseId },
       data: {

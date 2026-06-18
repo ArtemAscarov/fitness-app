@@ -12,6 +12,26 @@ enum ROLES {
   USER
 }
 
+model Level {
+  id        Int        @id @default(autoincrement())
+  name      String
+  slug      String     @unique
+  exercises Exercise[]
+
+  @@index([slug])
+}
+
+model ExerciseSection {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  image       String?
+  list        String[]
+
+  exerciseId Int
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+}
+
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
@@ -31,7 +51,7 @@ model Category {
 }
 
 model Favorite {
-  id Int @unique @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   exerciseId Int
   userId     Int
@@ -43,22 +63,24 @@ model Favorite {
 }
 
 model Exercise {
-  id               Int     @id @default(autoincrement())
-  title            String
-  description      String?
-  instructionTitle String
-  instruction      String
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String?
+  duration    String?
+  levelId     Int
+  level       Level   @relation(fields: [levelId], references: [id])
 
   image  String
   calory Int?
 
-  category  Category[]
-  favorites Favorite[]
+  exerciseSections ExerciseSection[]
+  category         Category[]
+  favorites        Favorite[]
 }
 
 model Refresh {
   id         Int      @id @default(autoincrement())
-  tokerId    String   @unique
+  tokenId    String   @unique
   userId     Int
   expireDate DateTime
   user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)

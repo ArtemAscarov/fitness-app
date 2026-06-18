@@ -7,6 +7,7 @@ import rateLimit from "express-rate-limit";
 
 import authRouter from "./routes/auth.routes";
 import categoryRouter from "./routes/category.routes";
+import levelRouter from "./routes/level.routes";
 import GlobalErrorValidator from "./middleware/GlobalErrorValidator";
 import refreshRouter from "./routes/refresh.routes";
 import ExerciseRoter from "./routes/exercise.routes";
@@ -22,7 +23,6 @@ const port = process.env?.PORT || 3001;
 
 const app = express();
 
-
 app.use(
   cors({
     credentials: true,
@@ -37,6 +37,7 @@ app.use(generalRateLimit);
 
 app.use(authRouter);
 app.use("/category", categoryRouter);
+app.use("/level", levelRouter);
 app.use("/refresh", refreshRouter);
 app.use("/exercise", ExerciseRoter);
 app.use("/favorite", FavoriteRoter);
