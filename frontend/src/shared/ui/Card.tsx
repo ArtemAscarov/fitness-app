@@ -31,7 +31,7 @@ export default function Card({ exercise }: Props) {
           alt={exercise.title}
           src={exercise.image}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#141d2b] via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-[#00000042]" />
 
         <span
           className={cn(

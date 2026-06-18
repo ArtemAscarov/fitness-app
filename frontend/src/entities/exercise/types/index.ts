@@ -1,4 +1,3 @@
-/** Секция в деталях упражнения: своё название, инструкция, фото и список пунктов. */
 export type ExerciseSection = {
   id: number;
   title: string;
@@ -9,7 +8,6 @@ export type ExerciseSection = {
 
 export type Exercise = {
   id: number;
-  /** Базовые данные */
   title: string;
   description?: string;
   level: string;
@@ -17,7 +15,6 @@ export type Exercise = {
   duration?: string;
   tags: string[];
   image: string;
-  /** Детали */
   mainInfo: string;
   sections: ExerciseSection[];
 };
