@@ -2,6 +2,9 @@ import { prisma } from "../prisma";
 import bcrypt from "bcrypt";
 import { AuthDataType } from "../validators/auth.validator";
 import { createToken } from "../util/createTokens";
+import jwt from "jsonwebtoken";
+import { RefreshJwtPayload } from "../lib/types/type";
+import { CustomError } from "../util/CustomError";
 
 class AuthServiceClass {
   async register(data: AuthDataType) {
@@ -25,15 +28,33 @@ class AuthServiceClass {
       },
     });
 
-    if (!findedUser) throw new Error("Неправильный логин или пароль");
+    if (!findedUser)
+      throw new CustomError("Неправильный логин или пароль", 401);
 
     const isMatch = await bcrypt.compare(data.password, findedUser.password);
-    if (!isMatch) throw new Error("Неправильный логин или пароль");
+    if (!isMatch) throw new CustomError("Неправильный логин или пароль", 401);
 
     const tokens = await createToken({
       id: findedUser.id,
     });
+
     return tokens;
+  }
+
+  async logout(token: string) {
+    if (!token) return;
+
+    const secret = process.env.JWT_SECRET || "It_is_secret";
+
+    const { refreshId } = jwt.verify(token, secret, {
+      ignoreExpiration: false,
+    }) as RefreshJwtPayload;
+
+    await prisma.refresh.deleteMany({
+      where: {
+        tokenId: refreshId,
+      },
+    });
   }
 }
 

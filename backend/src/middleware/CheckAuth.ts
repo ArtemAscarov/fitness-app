@@ -11,8 +11,7 @@ export const CheckAuth =
   }: { isStrict?: boolean; accessedRoles?: ROLES[] } = {}) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || "It_is_secret";
-    const authHeader = req.headers.authorization;
-    const token = authHeader?.split(" ")[1];
+    const token = req.cookies.accessToken;
     const badReq = () => {
       return res.status(403).json({ message: "Недостаточно прав" });
     };

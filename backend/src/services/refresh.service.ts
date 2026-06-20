@@ -8,19 +8,19 @@ import { createToken } from "../util/createTokens";
 
 class RefreshServiceClass {
   async verifyAndGiveNewToekens({ token }: tokenType) {
-    const secret = env.JWT_SECRET || "super_secret";
+    const secret = env.JWT_SECRET || "It_is_secret";
 
     const { refreshId } = jwt.verify(token, secret, {
       ignoreExpiration: true,
     }) as RefreshJwtPayload;
 
     const DbToken = await prisma.refresh.findUnique({
-      where: { tokerId: refreshId },
+      where: { tokenId: refreshId },
     });
 
     if (!DbToken) throw new CustomError("Невалидный токен", 403);
 
-    prisma.refresh.delete({
+   await prisma.refresh.delete({
       where: {
         id: DbToken.id,
       },

@@ -17,6 +17,8 @@ class ExerciseServiceClass {
       },
       include: {
         exerciseSections: true,
+        category: true,
+        level: true,
       },
     });
 
@@ -27,7 +29,7 @@ class ExerciseServiceClass {
 
   async getAll(query: ExerciseFiltersType, user?: AuthJwtPayload) {
     const where: Prisma.ExerciseWhereInput = {};
-    const include: any = { category: true };
+    const include: any = { category: true, level: true };
 
     if (user)
       include.favorites = {

@@ -6,6 +6,11 @@ import { bodyValidator } from "../middleware/Validators";
 const authRouter = Router();
 
 authRouter.post("/login", bodyValidator(AuthValidator), AuthController.login);
-authRouter.post("/register", bodyValidator(AuthValidator), AuthController.register);
+authRouter.post(
+  "/register",
+  bodyValidator(AuthValidator),
+  AuthController.register,
+);
+authRouter.post("/logout", AuthController.logout);
 
 export default authRouter;

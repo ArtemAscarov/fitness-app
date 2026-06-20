@@ -19,7 +19,7 @@ export async function createToken(data: DataType) {
   const result = await prisma.refresh.create({
     data: {
       userId: data.id,
-      tokerId: refreshId,
+      tokenId: refreshId,
       expireDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     },
   });
