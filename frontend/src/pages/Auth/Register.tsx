@@ -1,7 +1,6 @@
 "use client";
 
 import { registerFn } from "@/entities/user/api";
-import { LocalTokens } from "@/shared/features/LocalTokens";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
@@ -14,11 +13,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 
 type Props = {};
 
-type LoginForm = {
-  email: string;
-  password: string;
-};
-
 type ErrorStateType = {
   email: string[];
   password: string[];
@@ -27,12 +21,12 @@ type ErrorStateType = {
 
 export default function Register({}: Props) {
   const router = useRouter();
-  const [isSaveTokens, setIsSaveTokens] = useState<boolean>(true);
   const [isShowPass, setIsShowPass] = useState(false);
   const [isShowSecondPass, setIsShowSecondPass] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    remember: true,
     repeatedPassword: "",
   });
 
@@ -42,16 +36,13 @@ export default function Register({}: Props) {
     global: "",
   });
 
-  const mutation = useMutation<AuthTokens, AxiosError, LoginForm>({
+  const mutation = useMutation<
+    AuthTokens,
+    AxiosError,
+    Parameters<typeof registerFn>[0]
+  >({
     mutationFn: registerFn,
-    onSuccess: (data) => {
-      LocalTokens.clearTokens();
-      if (isSaveTokens) {
-        LocalTokens.setTokens(data);
-      } else {
-        LocalTokens.setSessionTokens(data);
-      }
-
+    onSuccess: () => {
       router.push("/exercise");
     },
     onError: (err) => {
@@ -218,8 +209,13 @@ export default function Register({}: Props) {
                 <input
                   id="checkbox-remember"
                   type="checkbox"
-                  checked={isSaveTokens}
-                  onChange={() => setIsSaveTokens((prew) => !prew)}
+                  checked={formData.remember}
+                  onChange={() =>
+                    setFormData((prew) => ({
+                      ...prew,
+                      remember: !prew.remember,
+                    }))
+                  }
                   className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft cursor-pointer"
                 />
                 <label

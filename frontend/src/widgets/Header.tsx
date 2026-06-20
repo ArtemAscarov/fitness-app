@@ -33,7 +33,7 @@ export default function Header() {
             </label>
           </div>
 
-          <div className="flex items-center justify-center sm:gap-4 gap-2">
+          <div className="flex items-center justify-center gap-2">
             <Button variant="ghost">
               <Image
                 className="min-w-4"
@@ -53,6 +53,16 @@ export default function Header() {
                 src={"/svg/plus.svg"}
               />
             </Button>
+
+            <Link href="/favorite" variant="ghost">
+              <Image
+                className="min-w-4"
+                width={20}
+                height={20}
+                alt="filters"
+                src={"/svg/emptyHurt.svg"}
+              />
+            </Link>
           </div>
         </div>
       </nav>

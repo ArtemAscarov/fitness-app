@@ -11,9 +11,9 @@ type Props = {
 };
 
 const levelStyles: Record<string, string> = {
-  Новичок: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
-  Средний: "border-amber-500/40 bg-amber-500/15 text-amber-300",
-  Продвинутый: "border-rose-500/40 bg-rose-500/15 text-rose-300",
+  Новичок: "border-emerald-500/40 bg-emerald-500/15 text-emerald-400",
+  Средний: "border-amber-500/40 bg-amber-500/15 text-amber-600",
+  Продвинутый: "border-rose-500/40 bg-rose-500/15 text-rose-600",
 };
 
 export default function Card({ exercise }: Props) {
@@ -26,21 +26,26 @@ export default function Card({ exercise }: Props) {
     >
       {/* Картинка */}
       <div className="relative overflow-hidden">
-        <img
-          className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          alt={exercise.title}
-          src={exercise.image}
-        />
-        <div className="absolute inset-0 bg-[#00000042]" />
+        <div className="relative">
+          <Image
+            quality={50}
+            className="h-[220px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            alt={exercise.title}
+            src={exercise.image}
+            width={328}
+            height={220}
+          />
+          <div className="absolute inset-0 bg-[#0000006b]" />
+        </div>
 
         <span
           className={cn(
             "absolute right-3 top-3 rounded-full border px-3 py-1 text-sm font-medium backdrop-blur-sm",
-            levelStyles[exercise.level] ??
-              "border-blue-500/40 bg-blue-500/15 text-blue-300"
+            levelStyles[exercise.level.name] ??
+              "border-blue-500/40 bg-blue-500/15 text-blue-600",
           )}
         >
-          {exercise.level}
+          {exercise.level.name}
         </span>
 
         <button
@@ -49,7 +54,7 @@ export default function Card({ exercise }: Props) {
             e.preventDefault();
             setLiked((v) => !v);
           }}
-          className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition hover:bg-black/60"
+          className="absolute left-3 cursor-pointer top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm transition hover:bg-black/60"
           aria-label="В избранное"
         >
           <Image
@@ -71,12 +76,12 @@ export default function Card({ exercise }: Props) {
         </p>
 
         <div className="mb-4 flex flex-wrap gap-2">
-          {exercise.tags.slice(0, 3).map((tag) => (
+          {exercise.category.slice(0, 3).map((tag) => (
             <span
-              key={tag}
+              key={tag.id}
               className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs text-blue-300"
             >
-              #{tag}
+              #{tag.name}
             </span>
           ))}
         </div>

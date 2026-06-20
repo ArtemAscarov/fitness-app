@@ -1,7 +1,6 @@
 "use client";
 
 import { loginFn } from "@/entities/user/api";
-import { LocalTokens } from "@/shared/features/LocalTokens";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
@@ -22,11 +21,11 @@ type ErrorStateType = {
 
 export default function Login({}: Props) {
   const router = useRouter();
-  const [isSaveTokens, setIsSaveTokens] = useState(true);
   const [isShowPass, setIsShowPass] = useState(false);
   const [FormData, setFormData] = useState<Parameters<typeof loginFn>[0]>({
     email: "",
     password: "",
+    remember: true,
   });
 
   const [errors, setErrors] = useState<ErrorStateType>({
@@ -71,14 +70,7 @@ export default function Login({}: Props) {
       setErrors(localErrors);
     },
 
-    onSuccess: (data) => {
-      LocalTokens.clearTokens();
-      if (isSaveTokens) {
-        LocalTokens.setTokens(data);
-      } else {
-        LocalTokens.setSessionTokens(data);
-      }
-
+    onSuccess: () => {
       router.push("/exercise");
     },
   });
@@ -178,8 +170,13 @@ export default function Login({}: Props) {
                 <input
                   id="checkbox-remember"
                   type="checkbox"
-                  checked={isSaveTokens}
-                  onChange={() => setIsSaveTokens((prew) => !prew)}
+                  checked={FormData.remember}
+                  onChange={() =>
+                    setFormData((prew) => ({
+                      ...prew,
+                      remember: !prew.remember,
+                    }))
+                  }
                   className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft cursor-pointer"
                 />
                 <label

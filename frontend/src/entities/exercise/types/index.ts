@@ -1,8 +1,11 @@
+import { Category } from "@/entities/category/type";
+import { Level } from "@/entities/level/type";
+
 export type ExerciseSection = {
   id: number;
   title: string;
-  instruction: string;
-  image: string;
+  description?: string;
+  image?: string;
   list: string[];
 };
 
@@ -10,11 +13,12 @@ export type Exercise = {
   id: number;
   title: string;
   description?: string;
-  level: string;
+  level: Level;
   calory?: number;
+
   duration?: string;
-  tags: string[];
+  category: Category[];
   image: string;
-  mainInfo: string;
+
   sections: ExerciseSection[];
 };

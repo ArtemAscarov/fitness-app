@@ -16,7 +16,7 @@ type SectionDraft = Omit<ExerciseSection, "list"> & { list: string };
 const emptySection = (id: number): SectionDraft => ({
   id,
   title: "",
-  instruction: "",
+  description: "",
   image: "",
   list: "",
 });
@@ -34,15 +34,14 @@ export default function ExerciseForm({ exercise }: Props) {
     level: exercise?.level ?? "Новичок",
     calory: exercise?.calory?.toString() ?? "",
     duration: exercise?.duration ?? "",
-    tags: exercise?.tags.join(", ") ?? "",
+    tags: exercise?.category.join(", ") ?? "",
     image: exercise?.image ?? "",
-    mainInfo: exercise?.mainInfo ?? "",
   });
 
   const [sections, setSections] = useState<SectionDraft[]>(
     exercise?.sections.map((s) => ({ ...s, list: s.list.join("\n") })) ?? [
       emptySection(1),
-    ]
+    ],
   );
 
   const set = (key: keyof typeof form, value: string) =>
@@ -50,7 +49,7 @@ export default function ExerciseForm({ exercise }: Props) {
 
   const setSection = (id: number, key: keyof SectionDraft, value: string) =>
     setSections((prev) =>
-      prev.map((s) => (s.id === id ? { ...s, [key]: value } : s))
+      prev.map((s) => (s.id === id ? { ...s, [key]: value } : s)),
     );
 
   const addSection = () =>
@@ -143,7 +142,7 @@ export default function ExerciseForm({ exercise }: Props) {
               <label className={labelClass}>Уровень</label>
               <select
                 className={inputClass}
-                value={form.level}
+                // value={form.level}
                 onChange={(e) => set("level", e.target.value)}
               >
                 <option>Новичок</option>
@@ -194,19 +193,6 @@ export default function ExerciseForm({ exercise }: Props) {
         </div>
       </fieldset>
 
-      {/* Детали: основная информация */}
-      <fieldset className="mb-6 rounded-3xl border border-white/10 bg-gradient-to-br from-[#1e2939] to-[#141d2b] p-6">
-        <legend className="px-2 text-lg font-semibold text-white">
-          Основная информация
-        </legend>
-        <textarea
-          className={`${inputClass} mt-2 min-h-[100px] resize-y`}
-          value={form.mainInfo}
-          onChange={(e) => set("mainInfo", e.target.value)}
-          placeholder="Подробное описание для блока «Основная информация»"
-        />
-      </fieldset>
-
       {/* Детали: секции */}
       <div className="mb-6 space-y-5">
         <div className="flex items-center justify-between">
@@ -245,9 +231,9 @@ export default function ExerciseForm({ exercise }: Props) {
                 <label className={labelClass}>Инструкция</label>
                 <textarea
                   className={`${inputClass} min-h-[70px] resize-y`}
-                  value={section.instruction}
+                  value={section.description}
                   onChange={(e) =>
-                    setSection(section.id, "instruction", e.target.value)
+                    setSection(section.id, "description", e.target.value)
                   }
                   placeholder="Краткая инструкция к секции"
                 />

@@ -54,11 +54,11 @@ export default function ExerciseDetail({ exercise }: Props) {
             <span
               className={cn(
                 "rounded-full border px-3 py-1 text-sm font-medium backdrop-blur-sm",
-                levelStyles[exercise.level] ??
-                  "border-blue-500/40 bg-blue-500/15 text-blue-300"
+                levelStyles[exercise.level.name] ??
+                  "border-blue-500/40 bg-blue-500/15 text-blue-300",
               )}
             >
-              {exercise.level}
+              {exercise.level.name}
             </span>
             <span className="flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-sm text-amber-300 backdrop-blur-sm">
               <Image width={16} height={16} src="/svg/progress.svg" alt="" />
@@ -78,12 +78,12 @@ export default function ExerciseDetail({ exercise }: Props) {
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            {exercise.tags.map((tag) => (
+            {exercise.category.map((tag) => (
               <span
-                key={tag}
+                key={tag.id}
                 className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs text-blue-300"
               >
-                #{tag}
+                #{tag.name}
               </span>
             ))}
           </div>
@@ -98,7 +98,6 @@ export default function ExerciseDetail({ exercise }: Props) {
             Основная информация
           </h2>
         </div>
-        <p className="leading-relaxed text-gray-300">{exercise.mainInfo}</p>
       </section>
 
       {/* ===== ДЕТАЛИ: секции ===== */}
@@ -117,7 +116,7 @@ export default function ExerciseDetail({ exercise }: Props) {
             <div
               className={cn(
                 "flex flex-col gap-6 md:flex-row",
-                index % 2 === 1 && "md:flex-row-reverse"
+                index % 2 === 1 && "md:flex-row-reverse",
               )}
             >
               {/* Фото */}
@@ -140,11 +139,14 @@ export default function ExerciseDetail({ exercise }: Props) {
                   </h3>
                 </div>
 
-                <p className="mb-4 text-gray-300">{section.instruction}</p>
+                <p className="mb-4 text-gray-300">{section.description}</p>
 
                 <ul className="space-y-2.5">
                   {section.list.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-gray-300">
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-gray-300"
+                    >
                       <span className="mt-1 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-blue-500/20 text-xs text-blue-300">
                         {i + 1}
                       </span>

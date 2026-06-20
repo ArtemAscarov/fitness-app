@@ -2,13 +2,21 @@ import { API } from "@/shared/lib/axios";
 import { AuthTokens } from "@/shared/types/type";
 import { User } from "../types";
 
-export const loginFn = async (body: { email: string; password: string }) => {
+export const loginFn = async (body: {
+  email: string;
+  password: string;
+  remember: boolean;
+}) => {
   const { data } = await API.post<AuthTokens>("/login", body);
 
   return data;
 };
 
-export const registerFn = async (body: { email: string; password: string }) => {
+export const registerFn = async (body: {
+  email: string;
+  password: string;
+  remember: boolean;
+}) => {
   const { data } = await API.post<AuthTokens>("/register", body);
 
   return data;

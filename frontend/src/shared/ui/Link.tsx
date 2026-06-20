@@ -23,7 +23,7 @@ export default function Link({
       break;
     case "ghost":
       buttonVariant =
-        "text-white hover:bg-[#ffffff10] transition duration-300 max-w-max rounded-sm lg:px-4 py-2 px-3";
+        "text-white transition duration-300 max-w-max rounded-sm hover:scale-120 p-2";
       break;
     case "whiteHover":
       buttonVariant = "hover:text-white transition";
