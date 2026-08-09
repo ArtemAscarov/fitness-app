@@ -27,7 +27,6 @@ export const ExerciseSchema = z.object({
   duration: z.string().optional(),
   image: z.url("Некорретная ссылка"),
   calory: z.number().optional(),
-  levelId: z.coerce.number(),
   exerciseSections: z.array(ExerciseSection).default([]),
 });
 

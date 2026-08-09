@@ -4,7 +4,7 @@ import { registerFn } from "@/entities/user/api";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +21,7 @@ type ErrorStateType = {
 
 export default function Register({}: Props) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [isShowPass, setIsShowPass] = useState(false);
   const [isShowSecondPass, setIsShowSecondPass] = useState(false);
   const [formData, setFormData] = useState({
@@ -43,6 +44,7 @@ export default function Register({}: Props) {
   >({
     mutationFn: registerFn,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       router.push("/exercise");
     },
     onError: (err) => {

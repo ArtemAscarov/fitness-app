@@ -9,9 +9,7 @@
     "migrate": "npx prisma migrate dev",
     "generate": "npx prisma generate",
     "studio": "npx prisma studio",
-    "test": "tsc --noEmit"
-  },
-  "prisma": {
+    "test": "tsc --noEmit",
     "seed": "tsx prisma/seed.ts"
   },
   "author": "",

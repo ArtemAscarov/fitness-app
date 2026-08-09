@@ -1,5 +1,5 @@
-import { ExerciseSkeleton } from "@/shared/ui/skeletons";
+import { ExercisesSkeleton } from "@/shared/ui/skeletons";
 
 export default function Loading() {
-  return <ExerciseSkeleton />;
+  return <ExercisesSkeleton />;
 }

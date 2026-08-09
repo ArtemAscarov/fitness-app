@@ -1,6 +1,6 @@
-import { notFound } from "next/navigation";
 import ExerciseForm from "@/pages/ExerciseForm";
-import { getExerciseById } from "@/entities/exercise/mock";
+import { getExerciseServerFetch } from "@/entities/exercise/api/server";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -8,9 +8,11 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { id } = await params;
-  const exercise = getExerciseById(Number(id));
+  const exercise = await getExerciseServerFetch(id);
 
-  if (!exercise) notFound();
+  if (!exercise) {
+    redirect("/exercise");
+  }
 
   return <ExerciseForm exercise={exercise} />;
 }

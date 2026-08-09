@@ -12,11 +12,12 @@ export const CheckAuth =
   async (req: Request, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || "It_is_secret";
     const token = req.cookies.accessToken;
-    const badReq = () => {
-      return res.status(403).json({ message: "Недостаточно прав" });
+    const refresh = req.cookies.refreshToken;
+    const badReq = (code?: number) => {
+      return res.status(code || 401).json({ message: "Недостаточно прав" });
     };
 
-    if (!token) return isStrict ? badReq() : next();
+    if (!token) return isStrict ? (refresh ? badReq() : badReq(400)) : next();
 
     try {
       const { id } = jwt.verify(token, secret) as AuthJwtPayload;
@@ -47,6 +48,8 @@ export const CheckAuth =
       console.log(err);
       if (err instanceof jwt.TokenExpiredError)
         return res.status(401).json({ message: "Просроченный токен" });
+      if (err instanceof jwt.JsonWebTokenError)
+        return res.status(401).json({ message: "Невалидный токен" });
 
       res.locals.user = undefined;
       isStrict ? badReq() : next();

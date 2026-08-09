@@ -41,7 +41,5 @@ export default (err: any, req: Request, res: Response, next: NextFunction) => {
     return res.status(500).json({ message: "Ошибка БД" });
   }
 
-  if (err.message) res.status(400).json({ message: err.message });
-
   return res.status(500).json({ message: "Непредвиденная ошибка" });
 };

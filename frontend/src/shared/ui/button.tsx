@@ -1,12 +1,12 @@
+import { ButtonHTMLAttributes } from "react";
 import { cn } from "../lib/cn";
 
 type Props = {
   children: React.ReactNode;
   className?: string;
   variant?: "ghost" | "default" | "glass";
-  onClick?: () => void;
   type?: "button" | "submit" | "reset";
-};
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button({
   children,
@@ -14,6 +14,7 @@ export default function Button({
   variant = "default",
   onClick,
   type = "button",
+  ...parametes
 }: Props) {
   let buttonVariant = "";
   switch (variant) {
@@ -22,7 +23,7 @@ export default function Button({
       break;
     case "ghost":
       buttonVariant =
-        "text-white transition duration-300 max-w-max rounded-sm hover:scale-120 p-2";
+        "text-white transition duration-300 rounded-sm hover:scale-110 p-2";
       break;
     default:
       buttonVariant =
@@ -31,10 +32,11 @@ export default function Button({
 
   return (
     <button
+      {...parametes}
       type={type}
       onClick={onClick}
       className={cn(
-        " flex items-center cursor-pointer",
+        "flex items-center cursor-pointer",
         buttonVariant,
         className,
       )}

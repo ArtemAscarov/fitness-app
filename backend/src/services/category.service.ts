@@ -37,7 +37,9 @@ class CategoryServiceClass {
   }
 
   async getAll() {
-    const Categories = await prisma.category.findMany();
+    const Categories = await prisma.categoriesGroup.findMany({
+      include: { categories: true },
+    });
     if (!Categories)
       throw new CustomError("Ошибка при получении категорий", 400);
     return Categories;

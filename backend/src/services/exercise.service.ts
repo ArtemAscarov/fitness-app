@@ -18,18 +18,17 @@ class ExerciseServiceClass {
       include: {
         exerciseSections: true,
         category: true,
-        level: true,
       },
     });
 
-    if (!data) throw new CustomError("Ошибка при получении упражнения", 500);
+    if (!data) throw new CustomError("Нету такого упражнения", 404);
 
     return data;
   }
 
   async getAll(query: ExerciseFiltersType, user?: AuthJwtPayload) {
-    const where: Prisma.ExerciseWhereInput = {};
-    const include: any = { category: true, level: true };
+    let where: Prisma.ExerciseWhereInput = {};
+    let include: any = { category: true };
 
     if (user)
       include.favorites = {

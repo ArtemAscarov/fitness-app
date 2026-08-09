@@ -1,9 +1,8 @@
 import axios, { AxiosError } from "axios";
-import { AuthTokens } from "../types/type";
 
 const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
-const AUTH_PATHS = ["/login", "/register", "/refresh"];
-let refreshPromise: Promise<string> | null = null;
+const AUTH_PATHS = ["/login", "/register", "/refresh", "/logout"];
+let refreshPromise: Promise<{ message: string }> | null = null;
 
 export const API = axios.create({
   baseURL: API_URL,
@@ -11,13 +10,13 @@ export const API = axios.create({
 });
 
 async function refreshAccesToken() {
-  const { data } = await axios.post<AuthTokens>(
+  const { data } = await axios.post<{ message: string }>(
     `${API_URL}/refresh`,
     {},
     { withCredentials: true },
   );
 
-  return data.accesToken;
+  return data;
 }
 
 function refreshOnce() {
@@ -41,7 +40,7 @@ API.interceptors.response.use(
 
     conf._retry = true;
     try {
-      const acces = await refreshOnce();
+      await refreshOnce();
       return API(conf);
     } catch (err: any) {
       return Promise.reject(err);

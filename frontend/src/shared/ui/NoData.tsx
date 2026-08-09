@@ -9,7 +9,7 @@ export default function NoData({ className, extraText }: Props) {
   return (
     <div
       className={cn([
-        "flex flex-col items-center justify-center text-gray-300 px-6",
+        "flex flex-col items-center justify-center min-h-[calc(100vh-100px)] text-gray-300 px-6",
         className,
       ])}
     >

@@ -1,5 +1,4 @@
 import { Category } from "@/entities/category/type";
-import { Level } from "@/entities/level/type";
 
 export type ExerciseSection = {
   id: number;
@@ -13,12 +12,29 @@ export type Exercise = {
   id: number;
   title: string;
   description?: string;
-  level: Level;
   calory?: number;
+  isFavorite: boolean;
 
   duration?: string;
   category: Category[];
   image: string;
 
-  sections: ExerciseSection[];
+  exerciseSections: ExerciseSection[];
+};
+
+export type ExerciseSectionFormData = {
+  id?: number;
+  title: string;
+  description?: string;
+  image?: string;
+  list: string[];
+};
+
+export type ExerciseFormData = {
+  title: string;
+  description?: string;
+  duration?: string;
+  image: string;
+  calory?: number;
+  exerciseSections: ExerciseSectionFormData[];
 };

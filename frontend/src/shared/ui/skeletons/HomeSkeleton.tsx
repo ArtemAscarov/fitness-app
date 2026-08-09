@@ -4,10 +4,8 @@ import Skeleton from "./Skeleton";
 export default function HomeSkeleton() {
   return (
     <>
-      {/* HERO */}
       <section className="relative py-2 md:py-16">
         <div className="container mx-auto grid items-center gap-12 px-2.5 md:grid-cols-2">
-          {/* Левая колонка */}
           <div className="mx-auto space-y-6 px-2.5">
             <Skeleton className="h-9 w-72 rounded-full" />
             <Skeleton className="h-10 w-full max-w-[450px]" />
@@ -20,7 +18,6 @@ export default function HomeSkeleton() {
             <Skeleton className="h-11 w-48" />
           </div>
 
-          {/* Правая колонка — карточка прогресса */}
           <div className="space-y-4 rounded-2xl bg-[#101a2c]/50 p-6">
             <Skeleton className="mb-4 h-6 w-40" />
             <div className="space-y-3">
@@ -32,7 +29,6 @@ export default function HomeSkeleton() {
         </div>
       </section>
 
-      {/* СТАТИСТИКА */}
       <section className="bg-[#131c2b] py-16">
         <div className="container mx-auto grid grid-cols-2 gap-10 text-center md:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
@@ -44,7 +40,6 @@ export default function HomeSkeleton() {
         </div>
       </section>
 
-      {/* КАРТОЧКИ ФИЧ */}
       <section className="bg-[#0e1625] py-20">
         <div className="container mx-auto mb-12 max-w-3xl space-y-3 text-center">
           <Skeleton className="mx-auto h-8 w-96 max-w-full" />

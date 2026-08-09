@@ -1,6 +1,5 @@
-import { Request,Response } from "express";
+import { Request, Response } from "express";
 import { FavoriteService } from "../services/favorite.service";
-
 
 class FavoriteControllerClass {
   async addToFavorite(req: Request, res: Response) {
@@ -14,7 +13,7 @@ class FavoriteControllerClass {
 
   async removeFromFavorite(req: Request, res: Response) {
     const userId = res.locals.user?.id as number;
-    const data = await FavoriteService.delete(userId, req.body);
+    const data = await FavoriteService.delete(userId, res.locals.param.id);
 
     return res.status(200).json({
       exerciseId: data,

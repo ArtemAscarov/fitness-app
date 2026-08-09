@@ -13,6 +13,7 @@ export const bodyValidator =
       return res.status(400).json(message);
     }
 
+    res.locals.body = validateBody;
     next();
   };
 
@@ -25,6 +26,7 @@ export const paramValidator =
       return res.status(400).json(message);
     }
 
+    res.locals.param = validateParam.data;
     next();
   };
 

@@ -4,7 +4,7 @@ import { loginFn } from "@/entities/user/api";
 import { APIErrorType, AuthTokens } from "@/shared/types/type";
 import AlertText from "@/shared/ui/AlertText";
 import Button from "@/shared/ui/button";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +20,7 @@ type ErrorStateType = {
 };
 
 export default function Login({}: Props) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const [isShowPass, setIsShowPass] = useState(false);
   const [FormData, setFormData] = useState<Parameters<typeof loginFn>[0]>({
@@ -71,6 +72,7 @@ export default function Login({}: Props) {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
       router.push("/exercise");
     },
   });

@@ -1,49 +1,27 @@
 import Image from "next/image";
-import Link from "@/shared/ui/Link";
 import { cn } from "@/shared/lib/cn";
 import type { Exercise } from "@/entities/exercise/types";
+import PrevPageButton from "@/entities/exercise/UI/PrevPageButton";
+import Link from "@/shared/ui/Link";
+import { Category } from "@/entities/category/type";
 
 type Props = {
   exercise: Exercise;
 };
 
-const levelStyles: Record<string, string> = {
-  Новичок: "border-emerald-500/40 bg-emerald-500/15 text-emerald-300",
-  Средний: "border-amber-500/40 bg-amber-500/15 text-amber-300",
-  Продвинутый: "border-rose-500/40 bg-rose-500/15 text-rose-300",
-};
-
 export default function ExerciseDetail({ exercise }: Props) {
+  const allCategories = exercise.category.flat() as Category[];
+
   return (
     <div className="mx-auto max-w-[1100px] px-2.5 pb-16">
       {/* Навигация */}
       <div className="flex items-center justify-between py-5">
-        <Link
-          href="/exercise"
-          variant="ghost"
-          className="gap-2 !px-3 text-gray-300"
-        >
-          <Image
-            width={18}
-            height={18}
-            src="/svg/arrowRight.svg"
-            alt=""
-            className="rotate-180"
-          />
-          К каталогу
-        </Link>
-        <Link
-          href={`/exercise/${exercise.id}/edit`}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500"
-        >
-          Редактировать
-        </Link>
+        <PrevPageButton />
       </div>
 
-      {/* ===== БАЗОВЫЕ ДАННЫЕ (hero) ===== */}
       <section className="relative overflow-hidden rounded-3xl border border-white/10">
         <img
-          src={exercise.image}
+          src={exercise.image || "/img/mainPageStart.png"}
           alt={exercise.title}
           className="h-[360px] w-full object-cover"
         />
@@ -51,15 +29,6 @@ export default function ExerciseDetail({ exercise }: Props) {
 
         <div className="absolute bottom-0 left-0 w-full p-6 xl:p-10">
           <div className="mb-3 flex flex-wrap items-center gap-3">
-            <span
-              className={cn(
-                "rounded-full border px-3 py-1 text-sm font-medium backdrop-blur-sm",
-                levelStyles[exercise.level.name] ??
-                  "border-blue-500/40 bg-blue-500/15 text-blue-300",
-              )}
-            >
-              {exercise.level.name}
-            </span>
             <span className="flex items-center gap-2 rounded-full border border-white/15 bg-black/40 px-3 py-1 text-sm text-amber-300 backdrop-blur-sm">
               <Image width={16} height={16} src="/svg/progress.svg" alt="" />
               {exercise.calory ?? "—"} ккал/мин
@@ -78,19 +47,19 @@ export default function ExerciseDetail({ exercise }: Props) {
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            {exercise.category.map((tag) => (
-              <span
-                key={tag.id}
+            {allCategories?.map((item) => (
+              <Link
+                href={`/exercise?category=${item.slug}`}
+                key={item.id}
                 className="rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs text-blue-300"
               >
-                #{tag.name}
-              </span>
+                #{item.name}
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ===== ДЕТАЛИ: основная информация ===== */}
       <section className="mt-6 rounded-3xl border border-white/10 bg-gradient-to-br from-[#1e2939] to-[#141d2b] p-6 xl:p-8">
         <div className="mb-4 flex items-center gap-3">
           <span className="h-8 w-1.5 rounded-full bg-gradient-to-b from-blue-400 to-indigo-500" />
@@ -100,15 +69,14 @@ export default function ExerciseDetail({ exercise }: Props) {
         </div>
       </section>
 
-      {/* ===== ДЕТАЛИ: секции ===== */}
       <div className="mt-8 space-y-6">
-        {exercise.sections.length === 0 && (
+        {exercise.exerciseSections.length === 0 && (
           <p className="rounded-2xl border border-dashed border-white/15 bg-white/5 p-6 text-center text-gray-400">
             Секции пока не добавлены.
           </p>
         )}
 
-        {exercise.sections.map((section, index) => (
+        {exercise.exerciseSections.map((section, index) => (
           <section
             key={section.id}
             className="overflow-hidden rounded-3xl border border-white/10 bg-[#141d2b]"
@@ -122,9 +90,9 @@ export default function ExerciseDetail({ exercise }: Props) {
               {/* Фото */}
               <div className="md:w-2/5">
                 <img
-                  src={section.image}
+                  src={section.image || "/svg/sectionsPlug.svg"}
                   alt={section.title}
-                  className="h-full max-h-[320px] w-full object-cover md:min-h-[260px]"
+                  className={`h-full max-h-[320px] w-full object-cover md:min-h-[260px] ${index % 2 === 1 ? "-scale-x-100" : ""}`}
                 />
               </div>
 

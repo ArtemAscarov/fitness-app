@@ -22,7 +22,7 @@ export async function createToken(data: DataType) {
       tokenId: refreshId,
       expireDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     },
-  });
+  });  
 
   if (!result) throw new CustomError("Ошибка при создании токена", 500);
 

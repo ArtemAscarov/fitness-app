@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { FavoriteController } from "../controllers/favorite.controller";
 import { CheckAuth } from "../middleware/CheckAuth";
-import { bodyValidator } from "../middleware/Validators";
+import { bodyValidator, paramValidator } from "../middleware/Validators";
 import { FavoriteSchema } from "../validators/favorite.validator";
+import { IdParamsSchema } from "../validators/general.validators";
 
 const FavoriteRoter = Router();
 
@@ -14,9 +15,9 @@ FavoriteRoter.post(
 );
 
 FavoriteRoter.delete(
-  "/",
+  "/:id",
   CheckAuth({ isStrict: true }),
-  bodyValidator(FavoriteSchema),
+  paramValidator(IdParamsSchema),
   FavoriteController.removeFromFavorite,
 );
 

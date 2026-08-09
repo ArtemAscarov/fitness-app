@@ -7,18 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ROLES {
+enum ROLE {
   ADMIN
   USER
 }
 
-model Level {
-  id        Int        @id @default(autoincrement())
-  name      String
-  slug      String     @unique
-  exercises Exercise[]
-
-  @@index([slug])
+model CategoriesGroup {
+  id         Int        @id @default(autoincrement())
+  name       String
+  categories Category[]
 }
 
 model ExerciseSection {
@@ -36,16 +33,18 @@ model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   password  String
-  role      ROLES      @default(USER)
+  role      ROLE       @default(USER)
   refreshes Refresh[]
   favorites Favorite[]
 }
 
 model Category {
-  id        Int        @id @default(autoincrement())
-  name      String
-  slug      String     @unique
-  exercises Exercise[]
+  id              Int             @id @default(autoincrement())
+  name            String
+  slug            String          @unique
+  exercises       Exercise[]
+  categoryGroupId Int
+  categoryGroup   CategoriesGroup @relation(fields: [categoryGroupId], references: [id], onDelete: Cascade)
 
   @@index([slug])
 }
@@ -67,8 +66,6 @@ model Exercise {
   title       String
   description String?
   duration    String?
-  levelId     Int
-  level       Level   @relation(fields: [levelId], references: [id])
 
   image  String
   calory Int?

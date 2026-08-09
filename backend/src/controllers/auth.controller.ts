@@ -19,7 +19,6 @@ class AuthControllerClass {
       secure: isProd,
       httpOnly: true,
       sameSite: "lax",
-      path: "/refresh",
       ...(data.remember ? { maxAge: 1000 * 60 * 60 * 24 * 30 } : {}),
     });
 
@@ -43,9 +42,8 @@ class AuthControllerClass {
       httpOnly: true,
       sameSite: "lax",
       ...(data.remember ? { maxAge: 1000 * 60 * 60 * 24 * 30 } : {}),
-      path: "/refresh",
     });
-
+    
     return res.status(200).json({ message: "Успех" });
   }
 
@@ -61,7 +59,6 @@ class AuthControllerClass {
     });
 
     res.clearCookie("refreshToken", {
-      path: "/refresh",
       secure: isProd,
       httpOnly: true,
       sameSite: "lax",

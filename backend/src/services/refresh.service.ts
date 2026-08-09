@@ -13,14 +13,15 @@ class RefreshServiceClass {
     const { refreshId } = jwt.verify(token, secret, {
       ignoreExpiration: true,
     }) as RefreshJwtPayload;
-
+    console.log(refreshId);
+    
     const DbToken = await prisma.refresh.findUnique({
       where: { tokenId: refreshId },
     });
 
-    if (!DbToken) throw new CustomError("Невалидный токен", 403);
+    if (!DbToken) throw new CustomError("Нету такого токена", 404);
 
-   await prisma.refresh.delete({
+    await prisma.refresh.delete({
       where: {
         id: DbToken.id,
       },

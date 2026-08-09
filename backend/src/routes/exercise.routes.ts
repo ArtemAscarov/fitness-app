@@ -59,7 +59,7 @@ ExerciseRoter.post(
 );
 
 ExerciseRoter.post(
-  "/disConnectToCategory",
+  "/disconnectToCategory",
   bodyValidator(ExerciseCategroyUpdate),
   ExerciseController.disconnectToCategroy,
 );

@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 
 import authRouter from "./routes/auth.routes";
 import categoryRouter from "./routes/category.routes";
-import levelRouter from "./routes/level.routes";
 import GlobalErrorValidator from "./middleware/GlobalErrorValidator";
 import refreshRouter from "./routes/refresh.routes";
 import ExerciseRoter from "./routes/exercise.routes";
@@ -38,7 +37,6 @@ app.use(generalRateLimit);
 
 app.use(authRouter);
 app.use("/category", categoryRouter);
-app.use("/level", levelRouter);
 app.use("/refresh", refreshRouter);
 app.use("/exercise", ExerciseRoter);
 app.use("/favorite", FavoriteRoter);

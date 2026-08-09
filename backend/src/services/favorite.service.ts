@@ -3,7 +3,7 @@ import { CustomError } from "../util/CustomError";
 import { FavoriteSchemaType } from "../validators/favorite.validator";
 
 class FavoriteServiceClass {
-  async delete(userId: number, { exerciseId }: FavoriteSchemaType) {
+  async delete(userId: number, exerciseId: number) {
     const data = await prisma.favorite.delete({
       where: {
         exerciseId_userId: {
