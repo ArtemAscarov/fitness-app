@@ -1,10 +1,10 @@
-import { prisma } from "../prisma";
+import { prisma } from "../prisma.js";
 import bcrypt from "bcrypt";
-import { AuthDataType } from "../validators/auth.validator";
-import { createToken } from "../util/createTokens";
+import { AuthDataType } from "../validators/auth.validator.js";
+import { createToken } from "../util/createTokens.js";
 import jwt from "jsonwebtoken";
-import { RefreshJwtPayload } from "../lib/types/type";
-import { CustomError } from "../util/CustomError";
+import { RefreshJwtPayload } from "../lib/types/type.js";
+import { CustomError } from "../util/CustomError.js";
 
 class AuthServiceClass {
   async register(data: AuthDataType) {

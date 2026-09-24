@@ -1,7 +1,7 @@
-import { AuthJwtPayload } from "../lib/types/type";
-import { prisma } from "../prisma";
-import { CustomError } from "../util/CustomError";
-import { UserGetQuerySchemaType } from "../validators/user.validator";
+import { AuthJwtPayload } from "../lib/types/type.js";
+import { prisma } from "../prisma.js";
+import { CustomError } from "../util/CustomError.js";
+import { UserGetQuerySchemaType } from "../validators/user.validator.js";
 
 class UserServiceClass {
   private select = {

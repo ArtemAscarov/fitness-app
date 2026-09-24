@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { CategoryController } from "../controllers/category.controller";
+import { CategoryController } from "../controllers/category.controller.js";
 import {
   CategorySchema,
   CategorySchemaPatch,
-} from "../validators/category.validator";
-import { bodyValidator, paramValidator } from "../middleware/Validators";
-import { IdParamsSchema } from "../validators/general.validators";
+} from "../validators/category.validator.js";
+import { bodyValidator, paramValidator } from "../middleware/Validators.js";
+import { IdParamsSchema } from "../validators/general.validators.js";
 
 const categoryRouter = Router();
 

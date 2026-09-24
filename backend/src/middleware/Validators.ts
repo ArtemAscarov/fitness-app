@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodType } from "zod";
-import { ZodErrorParser } from "../util/zodErrorParser";
+import { ZodErrorParser } from "../util/zodErrorParser.js";
 
 export const bodyValidator =
   (schema: ZodType) => (req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { CustomError } from "../util/CustomError";
-import { CodesType, PrismaErrType } from "../lib/types/type";
+import { CustomError } from "../util/CustomError.js";
+import { CodesType, PrismaErrType } from "../lib/types/type.js";
 import { Prisma } from "@prisma/client";
 
 type ErrType = {

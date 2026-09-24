@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AuthService } from "../services/auth.service";
-import { AuthDataType } from "../validators/auth.validator";
+import { AuthService } from "../services/auth.service.js";
+import { AuthDataType } from "../validators/auth.validator.js";
 
 class AuthControllerClass {
   async register(req: Request, res: Response) {

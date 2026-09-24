@@ -1,6 +1,6 @@
-import { prisma } from "../prisma";
-import { CustomError } from "../util/CustomError";
-import { FavoriteSchemaType } from "../validators/favorite.validator";
+import { prisma } from "../prisma.js";
+import { CustomError } from "../util/CustomError.js";
+import { FavoriteSchemaType } from "../validators/favorite.validator.js";
 
 class FavoriteServiceClass {
   async delete(userId: number, exerciseId: number) {

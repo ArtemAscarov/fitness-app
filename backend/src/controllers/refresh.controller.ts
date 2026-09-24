@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { RefreshService } from "../services/refresh.service";
+import { RefreshService } from "../services/refresh.service.js";
 
 class RefreshControllerClass {
   refresh = async (req: Request, res: Response, next: NextFunction) => {

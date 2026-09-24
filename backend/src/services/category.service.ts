@@ -1,9 +1,9 @@
-import { prisma } from "../prisma";
-import { CustomError } from "../util/CustomError";
+import { prisma } from "../prisma.js";
+import { CustomError } from "../util/CustomError.js";
 import {
   CategoryDataType,
   CategoryDataTypePatch,
-} from "../validators/category.validator";
+} from "../validators/category.validator.js";
 
 class CategoryServiceClass {
   async delete(id: number) {

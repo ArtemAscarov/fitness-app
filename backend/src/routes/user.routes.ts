@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { UserController } from "../controllers/user.controller";
-import { CheckAuth } from "../middleware/CheckAuth";
-import { paramValidator, queryValidator } from "../middleware/Validators";
-import { IdParamsSchema } from "../validators/general.validators";
-import { UserGetQuerySchema } from "../validators/user.validator";
+import { UserController } from "../controllers/user.controller.js";
+import { CheckAuth } from "../middleware/CheckAuth.js";
+import { paramValidator, queryValidator } from "../middleware/Validators.js";
+import { IdParamsSchema } from "../validators/general.validators.js";
+import { UserGetQuerySchema } from "../validators/user.validator.js";
 
 const UserRouter = Router();
 

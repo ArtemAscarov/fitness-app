@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { v4 as uuidv4 } from "uuid";
-import { prisma } from "../prisma";
-import { CustomError } from "./CustomError";
+import { prisma } from "../prisma.js";
+import { CustomError } from "./CustomError.js";
 
 type DataType = {
   id: number;

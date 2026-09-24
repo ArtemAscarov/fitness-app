@@ -1,4 +1,4 @@
-import { CodesType } from "../lib/types/type";
+import { CodesType } from "../lib/types/type.js";
 
 class CustomErrorClass extends Error {
   code: CodesType = 400;

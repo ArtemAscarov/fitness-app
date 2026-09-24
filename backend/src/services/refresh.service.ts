@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
-import { prisma } from "../prisma";
-import { tokenType } from "../validators/general.validators";
+import { prisma } from "../prisma.js";
+import { tokenType } from "../validators/general.validators.js";
 import { env } from "process";
-import { RefreshJwtPayload } from "../lib/types/type";
-import { CustomError } from "../util/CustomError";
-import { createToken } from "../util/createTokens";
+import { RefreshJwtPayload } from "../lib/types/type.js";
+import { CustomError } from "../util/CustomError.js";
+import { createToken } from "../util/createTokens.js";
 
 class RefreshServiceClass {
   async verifyAndGiveNewToekens({ token }: tokenType) {

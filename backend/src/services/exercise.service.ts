@@ -1,13 +1,13 @@
 import { Prisma } from "@prisma/client";
-import { AuthJwtPayload } from "../lib/types/type";
-import { prisma } from "../prisma";
-import { CustomError } from "../util/CustomError";
+import { AuthJwtPayload } from "../lib/types/type.js";
+import { prisma } from "../prisma.js";
+import { CustomError } from "../util/CustomError.js";
 import {
   ExerciseCategroyUpdateType,
   ExerciseFiltersType,
   ExerciseSchemaPatchType,
   ExerciseSchemaType,
-} from "../validators/exercise.validator";
+} from "../validators/exercise.validator.js";
 
 class ExerciseServiceClass {
   async getOne(id: number) {

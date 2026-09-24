@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { UserService } from "../services/user.service";
-import { AuthJwtPayload } from "../lib/types/type";
+import { UserService } from "../services/user.service.js";
+import { AuthJwtPayload } from "../lib/types/type.js";
 
 class UserControllerClass {
   async getUser(req: Request, res: Response) {

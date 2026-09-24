@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ExerciseService } from "../services/exercise.service";
+import { ExerciseService } from "../services/exercise.service.js";
 
 class ExerciseControllerClass {
   async get(req: Request, res: Response) {

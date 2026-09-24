@@ -6,13 +6,13 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
 
-import authRouter from "./routes/auth.routes";
-import categoryRouter from "./routes/category.routes";
-import GlobalErrorValidator from "./middleware/GlobalErrorValidator";
-import refreshRouter from "./routes/refresh.routes";
-import ExerciseRoter from "./routes/exercise.routes";
-import FavoriteRoter from "./routes/favorite.routes";
-import UserRouter from "./routes/user.routes";
+import authRouter from "./routes/auth.routes.js";
+import categoryRouter from "./routes/category.routes.js";
+import GlobalErrorValidator from "./middleware/GlobalErrorValidator.js";
+import refreshRouter from "./routes/refresh.routes.js";
+import ExerciseRoter from "./routes/exercise.routes.js";
+import FavoriteRoter from "./routes/favorite.routes.js";
+import UserRouter from "./routes/user.routes.js";
 
 const generalRateLimit = rateLimit({
   windowMs: 15 * 1000 * 60,

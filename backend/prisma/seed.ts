@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
-import { prisma } from "../src/prisma";
+import { prisma } from "../src/prisma.js";
 
 // ──────────────────────────────────────────────────────────────
 // Группы категорий (CategoriesGroup)

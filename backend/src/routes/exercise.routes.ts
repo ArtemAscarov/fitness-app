@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { CheckAuth } from "../middleware/CheckAuth";
-import { ExerciseController } from "../controllers/exercise.controller";
+import { CheckAuth } from "../middleware/CheckAuth.js";
+import { ExerciseController } from "../controllers/exercise.controller.js";
 import {
   bodyValidator,
   paramValidator,
   queryValidator,
-} from "../middleware/Validators";
-import { IdParamsSchema } from "../validators/general.validators";
+} from "../middleware/Validators.js";
+import { IdParamsSchema } from "../validators/general.validators.js";
 import {
   ExerciseCategroyUpdate,
   ExerciseFilters,
   ExerciseSchema,
   ExerciseSchemaPatch,
-} from "../validators/exercise.validator";
+} from "../validators/exercise.validator.js";
 
 const ExerciseRoter = Router();
 

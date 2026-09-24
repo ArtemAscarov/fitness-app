@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum ROLE {
+enum ROLES {
   ADMIN
   USER
 }
@@ -33,7 +33,7 @@ model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
   password  String
-  role      ROLE       @default(USER)
+  role      ROLES       @default(USER)
   refreshes Refresh[]
   favorites Favorite[]
 }

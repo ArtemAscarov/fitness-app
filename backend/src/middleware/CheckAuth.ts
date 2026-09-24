@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { AuthJwtPayload } from "../lib/types/type";
-import { prisma } from "../prisma";
+import { AuthJwtPayload } from "../lib/types/type.js";
+import { prisma } from "../prisma.js";
 import { ROLES } from "@prisma/client";
 
 export const CheckAuth =
