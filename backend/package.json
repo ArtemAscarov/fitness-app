@@ -10,7 +10,9 @@
     "generate": "npx prisma generate",
     "studio": "npx prisma studio",
     "test": "tsc --noEmit",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "build": "tsc",
+    "start": "node dist/src/server.js"
   },
   "author": "",
   "license": "ISC",

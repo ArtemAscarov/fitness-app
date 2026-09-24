@@ -1,6 +1,6 @@
 import { getExercisesServerFetch } from "@/entities/exercise/api/server";
 import { getExercisesQueryOptions } from "@/entities/exercise/features/getExercisesQueryOptions";
-import Exercise from "@/pages/Exercise";
+import Exercise from "@/views/Exercise";
 import {
   dehydrate,
   HydrationBoundary,

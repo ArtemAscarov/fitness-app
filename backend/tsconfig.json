@@ -5,5 +5,8 @@
     "moduleResolution": "nodenext",
     "strict": true,
     "esModuleInterop": true,
-  }
+    "outDir": "dist",
+    "rootDir": "."
+  },
+  "include": ["src", "prisma/seed.ts"]
 }

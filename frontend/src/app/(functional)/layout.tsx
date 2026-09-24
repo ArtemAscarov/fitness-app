@@ -8,6 +8,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
+import { Suspense } from "react";
 
 type Props = {
   children: React.ReactNode;
@@ -15,19 +16,21 @@ type Props = {
 
 export default async function layout({ children }: Props) {
   const query = new QueryClient();
-  
-  Promise.all([
-    await query.prefetchQuery({
+
+  await Promise.all([
+    query.prefetchQuery({
       ...getUserQueryOptions(),
       queryFn: getMeServerFn,
     }),
-    await query.prefetchQuery(getCategoryQueryOptions()),
+    query.prefetchQuery(getCategoryQueryOptions()),
   ]);
 
   return (
     <HydrationBoundary state={dehydrate(query)}>
       <div>
-        <Header />
+        <Suspense fallback={<div className="h-16" />}>
+          <Header />
+        </Suspense>
         <main>{children}</main>
         <Footer />
       </div>

@@ -17,14 +17,13 @@ class CategoryServiceClass {
   }
 
   async create(newData: CategoryDataType) {
-    const PrismaData = await prisma.category.create({
-      data: {
-        name: newData.name,
-        slug: newData.slug,
-      },
-    });
-
-    return PrismaData;
+    // const PrismaData = await prisma.category.create({
+    //   data: {
+    //     name: newData.name, I decided to do it in prisma studio (npm run studio)
+    //     slug: newData.slug,
+    //   },
+    // });
+    // return PrismaData;
   }
 
   async update(id: number, newData: CategoryDataTypePatch) {

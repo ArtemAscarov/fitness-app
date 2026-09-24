@@ -1,6 +1,6 @@
 import { getExercisesServerFetch } from "@/entities/exercise/api/server";
 import { getExercisesQueryOptions } from "@/entities/exercise/features/getExercisesQueryOptions";
-import Favorite from "@/pages/Favorite";
+import Favorite from "@/views/Favorite";
 import {
   dehydrate,
   HydrationBoundary,

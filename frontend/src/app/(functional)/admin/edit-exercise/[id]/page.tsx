@@ -1,4 +1,4 @@
-import ExerciseForm from "@/pages/ExerciseForm";
+import ExerciseForm from "@/views/ExerciseForm";
 import { getExerciseServerFetch } from "@/entities/exercise/api/server";
 import { redirect } from "next/navigation";
 

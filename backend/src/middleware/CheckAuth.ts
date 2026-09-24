@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { AuthJwtPayload } from "../lib/types/type.js";
 import { prisma } from "../prisma.js";
-import { ROLES } from "@prisma/client";
+import { ROLE } from "@prisma/client";
 
 export const CheckAuth =
   ({
     isStrict = false,
     accessedRoles,
-  }: { isStrict?: boolean; accessedRoles?: ROLES[] } = {}) =>
+  }: { isStrict?: boolean; accessedRoles?: ROLE[] } = {}) =>
   async (req: Request, res: Response, next: NextFunction) => {
     const secret = process.env.JWT_SECRET || "It_is_secret";
     const token = req.cookies.accessToken;

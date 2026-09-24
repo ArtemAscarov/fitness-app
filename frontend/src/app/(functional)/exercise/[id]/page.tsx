@@ -1,4 +1,4 @@
-import ExerciseDetail from "@/pages/ExerciseDetail";
+import ExerciseDetail from "@/views/ExerciseDetail";
 import { getExerciseServerFetch } from "@/entities/exercise/api/server";
 
 type Props = {

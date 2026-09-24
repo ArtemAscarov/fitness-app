@@ -1,4 +1,4 @@
-import Register from "@/pages/Auth/Register";
+import Register from "@/views/Auth/Register";
 
 export default function Page() {
   return <Register />;
