@@ -370,6 +370,14 @@ const exercisesData: ExerciseSeed[] = [
 ];
 
 async function main() {
+  const force = process.argv.includes("--force");
+  const categoryGroupCoutn = await prisma.categoriesGroup.count();
+
+  if (categoryGroupCoutn && !force) {
+    console.log("База уже заполнена, сид пропущен (--force для сброса)");
+    return;
+  }
+
   // Порядок удаления учитывает зависимости (Cascade закрывает часть,
   // но категории/группы и юзеров чистим явно)
   await prisma.favorite.deleteMany();
