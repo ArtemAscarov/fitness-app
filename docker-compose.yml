@@ -1,0 +1,40 @@
+services:
+  postgres:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U postgres -d fitness_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    image: postgres:16
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fitness_db
+  backend:
+    env_file:
+      - ./backend/.env
+    build: ./backend
+    init: true
+    ports:
+      - "3001:3001"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/fitness_db
+      PORT: 3001
+      # Переопределяют значения из .env: там хост localhost для запуска без Docker, а в контейнере база доступна по имени сервиса. PORT связан с ports выше.
+    depends_on:
+      postgres: 
+        condition: service_healthy
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    environment:
+      - NEXT_PUBLIC_BACKEND_URL=http://backend:3001
+
+volumes:
+  pgdata: 
