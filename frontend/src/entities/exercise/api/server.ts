@@ -2,6 +2,7 @@ import { PaginationResultType } from "@/shared/types/type";
 import { Exercise } from "../types";
 import { cookies } from "next/headers";
 import { transformExerciseParam } from "../features/transformExerciseParam";
+import { SERVER_BACKEND_URL } from "@/shared/config/backend";
 
 export async function getExercisesServerFetch(
   filters: Record<string, any>,
@@ -9,7 +10,7 @@ export async function getExercisesServerFetch(
   const cookieStore = await cookies();
   const access = cookieStore.get("accessToken")?.value;
 
-  const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL}/exercise`);
+  const url = new URL(`${SERVER_BACKEND_URL}/exercise`);
   const params = transformExerciseParam(filters);
 
   params.forEach((value, key) => {
@@ -34,7 +35,7 @@ export async function getExerciseServerFetch(
   const cookieStore = await cookies();
   const token = cookieStore.get("accessToken")?.value;
 
-  const url = new URL(`${process.env.NEXT_PUBLIC_BACKEND_URL}/exercise/${id}`);
+  const url = new URL(`${SERVER_BACKEND_URL}/exercise/${id}`);
 
   const res = await fetch(url, {
     headers: token ? { Cookie: `accessToken=${token}` } : {},

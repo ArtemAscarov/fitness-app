@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { SERVER_BACKEND_URL } from "./shared/config/backend";
 
 export async function middleware(request: NextRequest) {
   const access = request.cookies.get("accessToken")?.value;
@@ -13,7 +14,7 @@ export async function middleware(request: NextRequest) {
   }
 
   const refreshReq = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/refresh`,
+    `${SERVER_BACKEND_URL}/refresh`,
     { method: "POST", headers: { Cookie: `refreshToken=${refresh}` } },
   );
 
