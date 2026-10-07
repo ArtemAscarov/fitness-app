@@ -2,7 +2,7 @@ FROM node:22-slim AS build
 WORKDIR /app
 COPY . ./
 RUN npm ci
-ARG NEXT_PUBLIC_BACKEND_URL 
+ARG BACKEND_INTERNAL_URL 
 RUN npm run build 
 
 FROM node:22-slim AS runtime

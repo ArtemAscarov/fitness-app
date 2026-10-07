@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 
-const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
+const API_URL = "/api";
 const AUTH_PATHS = ["/login", "/register", "/refresh", "/logout"];
 let refreshPromise: Promise<{ message: string }> | null = null;
 
