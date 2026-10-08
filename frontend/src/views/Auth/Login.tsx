@@ -108,6 +108,10 @@ export default function Login({}: Props) {
             <h3 className="text-lg font-medium text-heading">Вход</h3>
           </div>
 
+          <p className="pt-4 text-sm text-gray-400">
+            Демо: demo@fitness.app / demo12345
+          </p>
+
           <form onSubmit={onSubmit} className="pt-4 md:pt-6">
             <div className="mb-4">
               <label className="block mb-2.5 text-sm font-medium text-heading">

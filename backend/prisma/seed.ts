@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { prisma } from "../src/prisma.js";
@@ -415,11 +416,24 @@ async function main() {
 
   // ── Пользователи ──
   const userPass = await bcrypt.hash("password123", 10);
+  // Пароль админа не хранится в коде: без переменной админ не создаётся
+  const adminPassword = process.env.SEED_ADMIN_PASSWORD;
+  if (!adminPassword) {
+    console.log("SEED_ADMIN_PASSWORD не задан, админ не создан");
+  }
   const usersData: Prisma.UserCreateManyInput[] = [
+    ...(adminPassword
+      ? [
+          {
+            email: "admin@gmail.com",
+            password: await bcrypt.hash(adminPassword, 10),
+            role: "ADMIN" as const,
+          },
+        ]
+      : []),
     {
-      email: "admin@gmail.com",
-      password: await bcrypt.hash("admin123", 10),
-      role: "ADMIN",
+      email: "demo@fitness.app",
+      password: await bcrypt.hash("demo12345", 10),
     },
     ...Array.from({ length: 39 }, (_, i) => ({
       email: `user${i + 1}@gmail.com`,
