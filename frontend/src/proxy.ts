@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { SERVER_BACKEND_URL } from "./shared/config/backend";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const access = request.cookies.get("accessToken")?.value;
   const refresh = request.cookies.get("refreshToken")?.value;
 
