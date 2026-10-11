@@ -31,6 +31,13 @@ app.use(
   }),
 );
 
+app.use((req, res, next) => {
+  console.log("ip : ", req.ip);
+  console.log("xff : ", req.headers["x-forwarded-for"]);
+  
+  next()
+})
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(generalRateLimit);
