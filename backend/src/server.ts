@@ -23,6 +23,8 @@ const port = process.env?.PORT || 3001;
 
 const app = express();
 
+app.set("trust proxy", 4)
+
 app.use(
   cors({
     credentials: true,
@@ -30,13 +32,6 @@ app.use(
     methods: ["POST", "GET", "PATCH", "DELETE"],
   }),
 );
-
-app.use((req, res, next) => {
-  console.log("ip : ", req.ip);
-  console.log("xff : ", req.headers["x-forwarded-for"]);
-  
-  next()
-})
 
 app.use(express.json());
 app.use(cookieParser());

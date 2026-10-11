@@ -4,12 +4,24 @@
 
 **Стек:** Next.js 16 · React 19 · TanStack Query · Express 5 · Prisma · PostgreSQL · Docker
 
+## Живое демо
+
+**https://fitness-app-xi-henna.vercel.app**: вход `demo@fitness.app` / `demo12345`
+
+> Бэкенд на бесплатном тарифе Render засыпает после 15 минут без запросов. Первая загрузка после сна может занять до минуты, дальше всё работает быстро.
+
+| Часть | Где |
+| ----- | --- |
+| фронтенд | Vercel |
+| бэкенд | Render (Docker-образ из `backend/Dockerfile`) |
+| база | Neon (PostgreSQL) |
+
 ## Быстрый старт (Docker)
 
 Нужен только [Docker Desktop](https://www.docker.com/products/docker-desktop/), Node.js ставить не надо.
 
 ```bash
-git clone <url-репозитория>
+git clone https://github.com/ArtemAscarov/fitness-app.git
 cd fitness-app
 cp backend/.env.example backend/.env
 docker compose up --build
@@ -42,8 +54,9 @@ docker compose up --build
 ## Как устроено
 
 ```
-браузер ──► frontend :3000 (Next.js) ──► backend :3001 (Express) ──► postgres :5432
-              /api/* проксируется
+локально: браузер ──► frontend :3000 (Next.js) ──► backend :3001 (Express) ──► postgres :5432
+на проде: браузер ──► Vercel                   ──► Render                   ──► Neon
+                       /api/* проксируется
 ```
 
 | Сервис | Образ | Порт наружу |
@@ -52,7 +65,7 @@ docker compose up --build
 | `backend`  | `backend/Dockerfile`, при старте `migrate deploy` → сид → сервер | 3001 |
 | `postgres` | `postgres:16`, healthcheck через `pg_isready` | не пробрасывается |
 
-**Почему браузер ходит на `/api`, а не прямо на бэкенд.** Next пересылает `/api/*` на бэкенд (`rewrites` в `frontend/next.config.ts`). Для браузера всё живёт на одном домене, и куки авторизации принадлежат домену фронта: их видят и браузер, и сервер Next (SSR, `middleware.ts`). Это важно на проде, где фронт и бэк на разных доменах.
+**Почему браузер ходит на `/api`, а не прямо на бэкенд.** Next пересылает `/api/*` на бэкенд (`rewrites` в `frontend/next.config.ts`). Для браузера всё живёт на одном домене, и куки авторизации принадлежат домену фронта: их видят и браузер, и сервер Next (SSR, `proxy.ts`). Это важно на проде, где фронт и бэк на разных доменах.
 
 ## Переменные окружения
 
