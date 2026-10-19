@@ -425,18 +425,18 @@ async function main() {
     ...(adminPassword
       ? [
           {
-            email: "admin@gmail.com",
+            email: "admin@example.com",
             password: await bcrypt.hash(adminPassword, 10),
             role: "ADMIN" as const,
           },
         ]
       : []),
     {
-      email: "demo@fitness.app",
+      email: "demo@example.com",
       password: await bcrypt.hash("demo12345", 10),
     },
     ...Array.from({ length: 39 }, (_, i) => ({
-      email: `user${i + 1}@gmail.com`,
+      email: `user${i + 1}@example.com`,
       password: userPass,
     })),
   ];
