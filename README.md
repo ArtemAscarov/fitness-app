@@ -6,7 +6,7 @@
 
 ## Живое демо
 
-**https://fitness-app-xi-henna.vercel.app**: вход `demo@fitness.app` / `demo12345`
+**https://fitness-app-xi-henna.vercel.app**: вход `demo@example.com` / `demo12345`
 
 > Бэкенд на бесплатном тарифе Render засыпает после 15 минут без запросов. Первая загрузка после сна может занять до минуты, дальше всё работает быстро.
 
@@ -35,10 +35,10 @@ docker compose up --build
 
 | Роль  | Email              | Пароль                             |
 | ----- | ------------------ | ---------------------------------- |
-| USER  | `demo@fitness.app` | `demo12345`                        |
-| ADMIN | `admin@gmail.com`  | значение `SEED_ADMIN_PASSWORD` в `backend/.env` |
+| USER  | `demo@example.com` | `demo12345`                        |
+| ADMIN | `admin@example.com`  | значение `SEED_ADMIN_PASSWORD` в `backend/.env` |
 
-Админ создаётся, только если задана `SEED_ADMIN_PASSWORD`. Кроме того, сид создаёт `user1…39@gmail.com` с паролем `password123`.
+Админ создаётся, только если задана `SEED_ADMIN_PASSWORD`. Кроме того, сид создаёт `user1…39@example.com` с паролем `password123`.
 
 ### Полезные команды
 
