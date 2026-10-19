@@ -109,7 +109,7 @@ export default function Login({}: Props) {
           </div>
 
           <p className="pt-4 text-sm text-gray-400">
-            Демо: demo@fitness.app / demo12345
+            Демо: demo@example.com / demo12345
           </p>
 
           <form onSubmit={onSubmit} className="pt-4 md:pt-6">
