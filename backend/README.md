@@ -12,7 +12,6 @@ REST API на Express 5 + TypeScript (ESM) + Prisma + PostgreSQL. Как зап�
 | `npm run migrate` | создать и применить миграцию (`prisma migrate dev`, только для разработки) |
 | `npm run generate` | сгенерировать Prisma Client |
 | `npm run seed` | заполнить базу, если она пустая. `-- --force` — стереть и заполнить заново |
-| `npm run migrate-demo-emails` | разово перевести старые демо-адреса (`demo@fitness.app`, `admin@gmail.com`, `user1…39@gmail.com`) на `@example.com`. Меняет только email, повторный запуск безопасен |
 | `npm run studio` | Prisma Studio, просмотр базы в браузере |
 | `npm test` | проверка типов (`tsc --noEmit`) |
 
@@ -23,8 +22,7 @@ backend/
 ├── prisma/
 │   ├── schema.prisma        # модель данных
 │   ├── migrations/          # история миграций
-│   ├── seed.ts              # демо-данные (идемпотентный)
-│   └── migrate-demo-emails.ts # разовый перенос демо-адресов на example.com
+│   └── seed.ts              # демо-данные (идемпотентный)
 ├── src/
 │   ├── server.ts            # точка входа: CORS, rate limit, роутеры
 │   ├── prisma.ts            # экземпляр PrismaClient
