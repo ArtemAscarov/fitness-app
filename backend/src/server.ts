@@ -23,7 +23,11 @@ const port = process.env?.PORT || 3001;
 
 const app = express();
 
-app.set("trust proxy", 4)
+app.set("trust proxy", 4);
+
+app.get("/health", (_, res) => {
+  return res.send("ok");
+});
 
 app.use(
   cors({
